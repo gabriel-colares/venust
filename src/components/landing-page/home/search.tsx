@@ -93,7 +93,7 @@ export function SearchSection() {
 
           <div className="text-center">
             <Link
-              href="/busca"
+              href="/buscar"
               className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors venust-glow-hover px-4 py-2 rounded-lg"
             >
               Ver todas as barbearias →

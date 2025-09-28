@@ -17,7 +17,7 @@ interface BarbershopMiniCardProps {
 
 export function BarbershopMiniCard({ barbershop }: BarbershopMiniCardProps) {
   return (
-    <Link href="/busca">
+    <Link href="/buscar">
       <Card className="bg-card border-border hover:border-primary/50 transition-all duration-150 venust-glow-hover cursor-pointer overflow-hidden pt-0">
         <CardContent className="p-0">
           <div className="relative h-48 overflow-hidden">
