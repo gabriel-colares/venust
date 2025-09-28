@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -19,39 +20,43 @@ export function Navbar() {
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="text-2xl font-bold text-primary venust-text-glow"
+          className="flex items-center gap-3 text-2xl font-bold text-primary venust-text-glow"
         >
+          <Image
+            alt="Venust logo"
+            src={"/assets/venust-icon.svg"}
+            width={32}
+            height={32}
+            className="venust-text-glow"
+          />
           Venust
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
           <Link
             href="/"
-            className={`transition-colors ${
-              isActive("/")
-                ? "text-primary font-semibold venust-text-glow"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`transition-colors ${isActive("/")
+              ? "text-primary font-semibold venust-text-glow"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             Início
           </Link>
           <Link
             href="/buscar"
-            className={`transition-colors ${
-              isActive("/buscar")
-                ? "text-primary font-semibold venust-text-glow"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`transition-colors ${isActive("/buscar")
+              ? "text-primary font-semibold venust-text-glow"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             Buscar Barbearias
           </Link>
           <Link
             href="/sou-barbearia"
-            className={`transition-colors ${
-              isActive("/sou-barbearia")
-                ? "text-primary font-semibold venust-text-glow"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`transition-colors ${isActive("/sou-barbearia")
+              ? "text-primary font-semibold venust-text-glow"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             Sou Barbearia
           </Link>
