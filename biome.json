@@ -17,20 +17,13 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
-      "suspicious": {
-        "noUnknownAtRules": "off"
-      }
-    },
-    "domains": {
-      "next": "recommended",
-      "react": "recommended"
+      "recommended": false
     }
   },
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "off"
       }
     }
   }

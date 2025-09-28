@@ -1,26 +1,215 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark theme as default with #09090B as background and #45D9A6 as primary color */
+  --background: #09090b;
+  --foreground: #fff;
+  --card: #0f0f0f;
+  --card-foreground: oklch(0.985 0 0);
+  --popover: #0f0f0f;
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: #45d9a6;
+  --primary-foreground: #09090b;
+  --secondary: #1a1a1a;
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1aa;
+  --accent: #45d9a6;
+  --accent-foreground: #09090b;
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #45d9a6;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+
+  /* Neon accent colors */
+  --neon-blue: #769fef;
+  --neon-pink: #ed7496;
 }
 
 @theme inline {
+  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* New neon colors */
+  --color-neon-coral: var(--neon-coral);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-pink: var(--neon-pink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 64px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section[id] {
+    scroll-margin-top: 64px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Added Venust-specific styles with prominent #45D9A6 color */
+.venust-gradient-bg {
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(69, 217, 166, 0.1) 0%,
+      transparent 50%
+    ), linear-gradient(135deg, #09090b 0%, #0f0f0f 100%);
+}
+
+.venust-text-glow {
+  text-shadow: 0 0 20px rgba(69, 217, 166, 0.5);
+}
+
+.venust-glow-hover {
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 rgba(69, 217, 166, 0);
+}
+
+.venust-glow-hover:hover {
+  box-shadow: 0 0 20px rgba(69, 217, 166, 0.3);
+  transform: translateY(-1px);
+}
+
+.venust-card-glow {
+  border: 1px solid rgba(69, 217, 166, 0.2);
+  background: linear-gradient(
+    135deg,
+    rgba(69, 217, 166, 0.05) 0%,
+    transparent 100%
+  );
+}
+
+.venust-card-glow:hover {
+  border-color: rgba(69, 217, 166, 0.4);
+  box-shadow: 0 8px 32px rgba(69, 217, 166, 0.1);
+}
+
+/* Added subtle neon accent effects */
+.venust-glow {
+  box-shadow: 0 0 20px rgba(69, 217, 166, 0.1);
+}
+
+/* Fixed neon colors and added more neon variations */
+.neon-accent-blue {
+  color: #769fef;
+  text-shadow: 0 0 10px rgba(118, 159, 239, 0.3);
+}
+
+.neon-accent-pink {
+  color: #ed7496;
+  text-shadow: 0 0 10px rgba(237, 116, 150, 0.3);
+}
+
+.neon-accent-purple {
+  color: #a855f7;
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+.neon-accent-cyan {
+  color: #06b6d4;
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+}
+
+.neon-accent-orange {
+  color: #f97316;
+  text-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+}
+
+.neon-glow-blue {
+  box-shadow: 0 0 20px rgba(118, 159, 239, 0.2);
+}
+
+.neon-glow-pink {
+  box-shadow: 0 0 20px rgba(237, 116, 150, 0.2);
+}
+
+.neon-glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.neon-glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.neon-glow-orange {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
+}
+
+/* Added conversion-focused styles */
+.conversion-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.conversion-glow {
+  box-shadow: 0 0 30px rgba(69, 217, 166, 0.3);
+  border: 2px solid rgba(69, 217, 166, 0.5);
 }
