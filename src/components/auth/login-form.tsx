@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { SvgGoogle } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { GoogleIcon } from "../ui/icons";
 
 export function LoginForm({
   className,
@@ -81,7 +81,7 @@ export function LoginForm({
           variant="outline"
           className="w-full h-12 border border-gray-700 bg-transparent text-white hover:bg-gray-900 hover:text-white/80"
         >
-          <GoogleIcon className="mr-2 size-4" />
+          <SvgGoogle className="mr-2 size-4" />
           Login com Google
         </Button>
       </div>
@@ -89,7 +89,7 @@ export function LoginForm({
       {/* Footer */}
       <div className="text-center text-sm text-muted-foreground">
         Não possui uma conta ainda?{" "}
-        <a href="#" className="text-[#45D9A6] hover:underline">
+        <a href="/cadastrar" className="text-[#45D9A6] hover:underline">
           Criar conta
         </a>
       </div>

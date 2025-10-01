@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/auth/login-form";
-import { VenustIcon } from "@/components/ui/icons";
+import { SvgVenust } from "@/components/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ export default function LoginPage() {
             href="/"
             className="flex items-center gap-2 font-medium text-2xl"
           >
-            <VenustIcon className="text-primary size-8" color="#FFF" />
+            <SvgVenust className="text-primary size-8" color="#FFF" />
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -23,10 +23,10 @@ export default function LoginPage() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <Image
-          src="/images/12212.jpg"
+          src="/images/57209.jpg"
           alt="Image"
           fill
-          className="object-cover brightness-[0.8]"
+          className="object-cover object-bottom brightness-[0.8]"
           priority
         />
       </div>

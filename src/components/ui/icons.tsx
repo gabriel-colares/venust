@@ -1,4 +1,4 @@
-export const VenustIcon = ({
+export const SvgVenust = ({
   className,
   color = "#45D9A6",
 }: {
@@ -25,7 +25,7 @@ export const VenustIcon = ({
   </svg>
 );
 
-export const GoogleIcon = ({ className }: { className?: string }) => (
+export const SvgGoogle = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={48}
