@@ -10,7 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google,
     Resend({
       from: "Venust <no-reply@venust.com.br>",
-    })
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {

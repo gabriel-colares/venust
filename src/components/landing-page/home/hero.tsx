@@ -68,7 +68,7 @@ export function HeroSection() {
           <div className="relative hidden lg:block">
             <div className="relative rounded-2xl overflow-hidden border border-primary/20 venust-glow">
               <img
-                src="/happy-people-getting-haircuts-at-modern-barbershop.jpg"
+                src="/images/5075.jpg"
                 alt="Clientes satisfeitos em barbearias modernas"
                 className="w-full h-[500px] object-cover"
               />

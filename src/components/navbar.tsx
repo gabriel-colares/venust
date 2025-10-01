@@ -27,6 +27,7 @@ export function Navbar() {
             src={"/assets/venust-icon.svg"}
             width={32}
             height={32}
+            style={{ width: "32px", height: "32px" }}
             className="venust-text-glow"
           />
           Venust
@@ -35,28 +36,31 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <Link
             href="/"
-            className={`transition-colors ${isActive("/")
-              ? "text-primary font-semibold venust-text-glow"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
+            className={`transition-colors ${
+              isActive("/")
+                ? "text-primary font-semibold venust-text-glow"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
           >
             Início
           </Link>
           <Link
             href="/buscar"
-            className={`transition-colors ${isActive("/buscar")
-              ? "text-primary font-semibold venust-text-glow"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
+            className={`transition-colors ${
+              isActive("/buscar")
+                ? "text-primary font-semibold venust-text-glow"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
           >
             Buscar Barbearias
           </Link>
           <Link
             href="/sou-barbearia"
-            className={`transition-colors ${isActive("/sou-barbearia")
-              ? "text-primary font-semibold venust-text-glow"
-              : "text-muted-foreground hover:text-foreground"
-              }`}
+            className={`transition-colors ${
+              isActive("/sou-barbearia")
+                ? "text-primary font-semibold venust-text-glow"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
           >
             Sou Barbearia
           </Link>

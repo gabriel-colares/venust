@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Venust",
     "barbearias próximas",
   ],
-}
+};
 
 export default function RootLayout({
   children,
@@ -37,7 +37,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <p>RootLayout</p>
       </body>
     </html>
   );

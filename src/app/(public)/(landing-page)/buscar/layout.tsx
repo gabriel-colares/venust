@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Venust busca",
     "cabelo e barba",
   ],
-}
+};
 
 export default function BuscarLayout({ children }: PropsWithChildren) {
   return children;

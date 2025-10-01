@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Venust parceiros",
     "atrair clientes barbearia",
   ],
-}
+};
 
 export default function BuscarLayout({ children }: PropsWithChildren) {
   return children;
