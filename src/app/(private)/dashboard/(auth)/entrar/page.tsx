@@ -15,10 +15,24 @@ export default function LoginPage() {
             <SvgVenust className="text-primary size-8" color="#FFF" />
           </Link>
         </div>
+
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-md">
             <LoginForm />
           </div>
+        </div>
+
+        <div className="flex justify-between gap-2">
+          <span className="text-[#9B9C9E] text-sm font-medium hover:underline">
+            Venust © 2025
+          </span>
+
+          <Link
+            href="#privacy_policy"
+            className="text-[#9B9C9E] text-sm font-medium hover:underline"
+          >
+            Políticas de Privacidade
+          </Link>
         </div>
       </div>
       <div className="bg-muted relative hidden lg:block">

@@ -13,7 +13,7 @@ export default function SignupPage() {
           </Link>
 
           <Link
-            href="/entrar"
+            href="/dashboard/entrar"
             className="flex items-center gap-2 text-primary hover:underline"
           >
             Entrar
@@ -32,7 +32,7 @@ export default function SignupPage() {
           </span>
 
           <Link
-            href="#privacy_policy"
+            href="/politica-de-privacidade"
             className="text-[#9B9C9E] text-sm font-medium hover:underline"
           >
             Políticas de Privacidade

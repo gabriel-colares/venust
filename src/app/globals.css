@@ -1,8 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  /* Dark theme as default with #09090B as background and #45D9A6 as primary color */
+  /* Dark theme as default with #09090b as background and #45D9A6 as primary color */
   --background: #09090b;
   --foreground: #fff;
   --card: #0f0f0f;
@@ -28,7 +30,7 @@
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
   --radius: 0.625rem;
-  --sidebar: oklch(0.205 0 0);
+  --sidebar: #09090b;
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
@@ -116,6 +118,22 @@ section[id] {
 }
 
 /* Added Venust-specific styles with prominent #45D9A6 color */
+.bg-venust-primary {
+  background-color: #45d9a6;
+}
+
+.text-venust-primary {
+  color: #45d9a6;
+}
+
+.hover\:bg-venust-primary\/90:hover {
+  background-color: rgba(69, 217, 166, 0.9);
+}
+
+.hover\:text-venust-primary:hover {
+  color: #45d9a6;
+}
+
 .venust-gradient-bg {
   background:
     radial-gradient(
@@ -212,4 +230,15 @@ section[id] {
 .conversion-glow {
   box-shadow: 0 0 30px rgba(69, 217, 166, 0.3);
   border: 2px solid rgba(69, 217, 166, 0.5);
+}
+
+.dark {
+  --sidebar: #fff;
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
