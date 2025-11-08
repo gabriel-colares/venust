@@ -1,14 +1,11 @@
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <main className="w-full bg-[#0d0f10]">
-        <SidebarTrigger />
-        {children}
-      </main>
+      <AppSidebar className="bg-[#0d0f10]" />
+      <main className="w-full bg-[#0d0f10]">{children}</main>
     </SidebarProvider>
   );
 }
