@@ -30,7 +30,43 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const svgPaths = {
+type AlertType = "warning" | "info" | "error";
+interface Alert {
+  id: number;
+  type: AlertType;
+  message: string;
+  action: string;
+  link: string;
+}
+
+interface Appointment {
+  id: number;
+  time: string;
+  client: string;
+  service: string;
+  status: "confirmed" | "pending";
+}
+
+interface ViewsImpressionsDatum {
+  name: string;
+  visualizacoes: number;
+  impressoes: number;
+}
+
+interface BookingsReviewsDatum {
+  name: string;
+  agendamentos: number;
+  avaliacoes: number;
+}
+
+interface ServiceStat {
+  name: string;
+  value: number;
+}
+
+type IconComponent = React.ComponentType<{ className?: string }>;
+
+const svgPaths: Record<string, string> = {
   p10d2aa00: "M1.66667 1.66667L6.33333 6.33333M6.33333 1.66667L1.66667 6.33333",
   p13672080:
     "M18 10L12.7071 15.2929C12.3166 15.6834 11.6834 15.6834 11.2929 15.2929L6 10",
@@ -43,7 +79,7 @@ const svgPaths = {
 };
 
 // Mock data
-const viewsVsImpressionsData = [
+const viewsVsImpressionsData: ViewsImpressionsDatum[] = [
   { name: "Jan", visualizacoes: 420, impressoes: 820 },
   { name: "Fev", visualizacoes: 510, impressoes: 1050 },
   { name: "Mar", visualizacoes: 480, impressoes: 920 },
@@ -52,7 +88,7 @@ const viewsVsImpressionsData = [
   { name: "Jun", visualizacoes: 710, impressoes: 1420 },
 ];
 
-const bookingsVsReviewsData = [
+const bookingsVsReviewsData: BookingsReviewsDatum[] = [
   { name: "Jan", agendamentos: 45, avaliacoes: 38 },
   { name: "Fev", agendamentos: 52, avaliacoes: 45 },
   { name: "Mar", agendamentos: 48, avaliacoes: 41 },
@@ -61,7 +97,7 @@ const bookingsVsReviewsData = [
   { name: "Jun", agendamentos: 71, avaliacoes: 63 },
 ];
 
-const topServicesData = [
+const topServicesData: ServiceStat[] = [
   { name: "Corte + Barba", value: 45 },
   { name: "Corte de Cabelo", value: 38 },
   { name: "Barba", value: 28 },
@@ -72,7 +108,7 @@ const topServicesData = [
   { name: "Relaxamento", value: 4 },
 ];
 
-const todayAppointments = [
+const todayAppointments: Appointment[] = [
   {
     id: 1,
     time: "09:00",
@@ -110,24 +146,24 @@ const todayAppointments = [
   },
 ];
 
-const alerts = [
+const alerts: Alert[] = [
   {
     id: 1,
-    type: "warning" as const,
+    type: "warning",
     message: "3 agendamentos pendentes de confirmação",
     action: "Revisar agendamentos",
     link: "/agendamentos?status=pending",
   },
   {
     id: 2,
-    type: "info" as const,
+    type: "info",
     message: "Feriado próximo: 12 de Outubro",
     action: "Configurar horários",
     link: "/configuracoes/horarios",
   },
   {
     id: 3,
-    type: "error" as const,
+    type: "error",
     message: "Lembretes automáticos desativados",
     action: "Ativar lembretes",
     link: "/configuracoes/notificacoes",
@@ -173,19 +209,44 @@ function VenustIcons() {
 }
 
 function Sidebar() {
-  const menuItems = [
-    { icon: TrendingUp, label: "Dashboard", active: true, href: "/dashboard" },
+  const menuItems: {
+    icon: IconComponent;
+    label: string;
+    active: boolean;
+    href: string;
+  }[] = [
     {
-      icon: Calendar,
+      icon: TrendingUp as IconComponent,
+      label: "Dashboard",
+      active: true,
+      href: "/dashboard",
+    },
+    {
+      icon: Calendar as IconComponent,
       label: "Agendamentos",
       active: false,
       href: "/agendamentos",
     },
-    { icon: Users, label: "Clientes", active: false, href: "/clientes" },
-    { icon: Scissors, label: "Serviços", active: false, href: "/servicos" },
-    { icon: Users, label: "Equipe", active: false, href: "/equipe" },
     {
-      icon: Settings,
+      icon: Users as IconComponent,
+      label: "Clientes",
+      active: false,
+      href: "/clientes",
+    },
+    {
+      icon: Scissors as IconComponent,
+      label: "Serviços",
+      active: false,
+      href: "/servicos",
+    },
+    {
+      icon: Users as IconComponent,
+      label: "Equipe",
+      active: false,
+      href: "/equipe",
+    },
+    {
+      icon: Settings as IconComponent,
       label: "Configurações",
       active: false,
       href: "/configuracoes",
@@ -251,7 +312,7 @@ function KPICard({
   value,
   subtitle,
 }: {
-  icon: any;
+  icon: IconComponent;
   label: string;
   value: string | number;
   subtitle?: string;
@@ -286,8 +347,8 @@ function KPICard({
   );
 }
 
-function AlertsPanel({ alerts }: { alerts: typeof alerts }) {
-  const getAlertIcon = (type: string) => {
+function AlertsPanel({ alerts }: { alerts: Alert[] }) {
+  const getAlertIcon = (type: AlertType) => {
     switch (type) {
       case "error":
         return <AlertCircle className="size-[18px]" />;
@@ -298,7 +359,7 @@ function AlertsPanel({ alerts }: { alerts: typeof alerts }) {
     }
   };
 
-  const getAlertColor = (type: string) => {
+  const getAlertColor = (type: AlertType) => {
     switch (type) {
       case "error":
         return { bg: "#ff6b6b15", text: "#ff6b6b", border: "#ff6b6b30" };
@@ -349,11 +410,7 @@ function AlertsPanel({ alerts }: { alerts: typeof alerts }) {
   );
 }
 
-function AppointmentItem({
-  appointment,
-}: {
-  appointment: (typeof todayAppointments)[0];
-}) {
+function AppointmentItem({ appointment }: { appointment: Appointment }) {
   const statusConfig = {
     confirmed: { bg: "#32f1b415", text: "#32f1b4", label: "Confirmado" },
     pending: { bg: "#ff9f4315", text: "#ff9f43", label: "Pendente" },
@@ -430,10 +487,10 @@ function EmptyAppointments() {
 export default function Dashboard() {
   const totalAppointments = todayAppointments.length;
   const confirmedAppointments = todayAppointments.filter(
-    (apt) => apt.status === "confirmed",
+    (apt) => apt.status === "confirmed"
   ).length;
   const pendingAppointments = todayAppointments.filter(
-    (apt) => apt.status === "pending",
+    (apt) => apt.status === "pending"
   ).length;
 
   // Mock calculations

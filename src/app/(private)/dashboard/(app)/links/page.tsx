@@ -22,8 +22,49 @@ import {
   Settings,
 } from "lucide-react";
 
+type LinkType = "general" | "service" | "barber";
+
+interface LinkItem {
+  id: number;
+  name: string;
+  description: string;
+  url: string;
+  type: LinkType;
+  active: boolean;
+  clicks: number;
+  conversions: number;
+  createdAt: string;
+  serviceId?: number | null;
+  barberId?: number | null;
+}
+
+type Service = { id: number; name: string };
+type Barber = { id: number; name: string };
+
+interface LinkCardProps {
+  link: LinkItem;
+  onEdit: (link: LinkItem) => void;
+  onDelete: (id: number) => void;
+  onToggle: (id: number) => void;
+}
+
+interface LinkFormData {
+  name: string;
+  description: string;
+  type: LinkType;
+  serviceId: number | null;
+  barberId: number | null;
+  active: boolean;
+}
+
+interface LinkModalProps {
+  link: LinkItem | null;
+  onSave: (data: LinkFormData) => void;
+  onClose: () => void;
+}
+
 // Mock data
-const linksData = [
+const linksData: LinkItem[] = [
   {
     id: 1,
     name: "Link Geral",
@@ -73,20 +114,20 @@ const linksData = [
   },
 ];
 
-const services = [
+const services: Service[] = [
   { id: 1, name: "Corte Masculino" },
   { id: 2, name: "Combo Completo" },
   { id: 3, name: "Barba" },
   { id: 4, name: "Sobrancelha" },
 ];
 
-const barbers = [
+const barbers: Barber[] = [
   { id: 1, name: "João Silva" },
   { id: 2, name: "Pedro Santos" },
   { id: 3, name: "Carlos Lima" },
 ];
 
-function LinkCard({ link, onEdit, onDelete, onToggle }: any) {
+function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
   const [showQR, setShowQR] = useState(false);
 
   const copyLink = () => {
@@ -280,17 +321,26 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: any) {
   );
 }
 
-function LinkModal({ link, onSave, onClose }: any) {
-  const [formData, setFormData] = useState(
-    link || {
-      name: "",
-      description: "",
-      type: "general",
-      serviceId: null,
-      barberId: null,
-      active: true,
-    },
-  );
+function LinkModal({ link, onSave, onClose }: LinkModalProps) {
+  const initialFormData: LinkFormData = link
+    ? {
+        name: link.name,
+        description: link.description,
+        type: link.type,
+        serviceId: link.serviceId ?? null,
+        barberId: link.barberId ?? null,
+        active: link.active,
+      }
+    : {
+        name: "",
+        description: "",
+        type: "general",
+        serviceId: null,
+        barberId: null,
+        active: true,
+      };
+
+  const [formData, setFormData] = useState<LinkFormData>(initialFormData);
 
   const handleSave = () => {
     onSave(formData);
@@ -300,15 +350,13 @@ function LinkModal({ link, onSave, onClose }: any) {
   const generateUrl = () => {
     let baseUrl = "venust.app/agendar/venust";
 
-    if (formData.type === "service" && formData.serviceId) {
-      const service = services.find(
-        (s) => s.id === parseInt(formData.serviceId),
-      );
+    if (formData.type === "service" && formData.serviceId !== null) {
+      const service = services.find((s) => s.id === formData.serviceId);
       if (service) {
         baseUrl += `/${service.name.toLowerCase().replace(/\s+/g, "-")}`;
       }
-    } else if (formData.type === "barber" && formData.barberId) {
-      const barber = barbers.find((b) => b.id === parseInt(formData.barberId));
+    } else if (formData.type === "barber" && formData.barberId !== null) {
+      const barber = barbers.find((b) => b.id === formData.barberId);
       if (barber) {
         baseUrl += `/${barber.name.toLowerCase().replace(/\s+/g, "-")}`;
       }
@@ -371,7 +419,7 @@ function LinkModal({ link, onSave, onClose }: any) {
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  type: e.target.value,
+                  type: e.target.value as LinkType,
                   serviceId: null,
                   barberId: null,
                 })
@@ -390,10 +438,11 @@ function LinkModal({ link, onSave, onClose }: any) {
                 Serviço
               </label>
               <select
-                value={formData.serviceId || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, serviceId: e.target.value })
-                }
+                value={formData.serviceId ?? ""}
+                onChange={(e) => {
+                  const val = e.target.value ? Number(e.target.value) : null;
+                  setFormData({ ...formData, serviceId: val });
+                }}
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
               >
                 <option value="">Selecione um serviço</option>
@@ -412,10 +461,11 @@ function LinkModal({ link, onSave, onClose }: any) {
                 Profissional
               </label>
               <select
-                value={formData.barberId || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, barberId: e.target.value })
-                }
+                value={formData.barberId ?? ""}
+                onChange={(e) => {
+                  const val = e.target.value ? Number(e.target.value) : null;
+                  setFormData({ ...formData, barberId: val });
+                }}
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
               >
                 <option value="">Selecione um profissional</option>
@@ -473,18 +523,18 @@ function LinkModal({ link, onSave, onClose }: any) {
 }
 
 export default function LinksPage() {
-  const [links, setLinks] = useState(linksData);
+  const [links, setLinks] = useState<LinkItem[]>(linksData);
   const [showModal, setShowModal] = useState(false);
-  const [editingLink, setEditingLink] = useState(null);
+  const [editingLink, setEditingLink] = useState<LinkItem | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredLinks = links.filter(
     (link) =>
       link.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      link.description.toLowerCase().includes(searchTerm.toLowerCase()),
+      link.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleEdit = (link: any) => {
+  const handleEdit = (link: LinkItem) => {
     setEditingLink(link);
     setShowModal(true);
   };
@@ -496,20 +546,20 @@ export default function LinksPage() {
   const handleToggle = (linkId: number) => {
     setLinks(
       links.map((link) =>
-        link.id === linkId ? { ...link, active: !link.active } : link,
-      ),
+        link.id === linkId ? { ...link, active: !link.active } : link
+      )
     );
   };
 
-  const handleSave = (linkData: any) => {
+  const handleSave = (linkData: LinkFormData) => {
     if (editingLink) {
       setLinks(
         links.map((link) =>
-          link.id === editingLink.id ? { ...link, ...linkData } : link,
-        ),
+          link.id === editingLink.id ? { ...link, ...linkData } : link
+        )
       );
     } else {
-      const newLink = {
+      const newLink: LinkItem = {
         ...linkData,
         id: Math.max(...links.map((l) => l.id)) + 1,
         url: "venust.app/agendar/venust", // Seria gerada dinamicamente
@@ -525,7 +575,7 @@ export default function LinksPage() {
   const totalClicks = links.reduce((sum, link) => sum + link.clicks, 0);
   const totalConversions = links.reduce(
     (sum, link) => sum + link.conversions,
-    0,
+    0
   );
   const activeLinks = links.filter((link) => link.active).length;
 
