@@ -1,13 +1,24 @@
 "use client";
 
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export function Navbar() {
   const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -15,6 +26,8 @@ export function Navbar() {
     }
     return pathname.startsWith(path);
   };
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <Fragment>
@@ -70,10 +83,97 @@ export function Navbar() {
 
           <Button
             asChild
-            className="bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover"
+            className="hidden md:inline-flex bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover"
           >
             <Link href="/#lista-de-acesso-antecipado">Acesso Antecipado</Link>
           </Button>
+
+          <div className="md:hidden">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Abrir menu"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <Menu className="size-5" aria-hidden="true" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="p-0">
+                <SheetHeader className="sr-only">
+                  <SheetTitle>Menu</SheetTitle>
+                  <SheetDescription>Navegação do site.</SheetDescription>
+                </SheetHeader>
+                <div className="flex items-center gap-3 border-b border-border px-4 h-16">
+                  <Link
+                    href="/"
+                    onClick={closeMobileMenu}
+                    className="flex items-center gap-3 text-lg font-bold text-primary"
+                  >
+                    <Image
+                      alt="Venust logo"
+                      src={"/images/venust-icon.svg"}
+                      width={28}
+                      height={28}
+                      style={{ width: "28px", height: "28px" }}
+                    />
+                    Venust
+                  </Link>
+                </div>
+
+                <div className="px-4 py-4">
+                  <div className="grid gap-1">
+                    <Link
+                      href="/"
+                      onClick={closeMobileMenu}
+                      className={`rounded-md px-3 py-2 text-base transition-colors ${
+                        isActive("/")
+                          ? "text-primary font-semibold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                      }`}
+                    >
+                      Início
+                    </Link>
+                    <Link
+                      href="/buscar"
+                      onClick={closeMobileMenu}
+                      className={`rounded-md px-3 py-2 text-base transition-colors ${
+                        isActive("/buscar")
+                          ? "text-primary font-semibold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                      }`}
+                    >
+                      Buscar Barbearias
+                    </Link>
+                    <Link
+                      href="/sou-barbearia"
+                      onClick={closeMobileMenu}
+                      className={`rounded-md px-3 py-2 text-base transition-colors ${
+                        isActive("/sou-barbearia")
+                          ? "text-primary font-semibold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                      }`}
+                    >
+                      Sou Barbearia
+                    </Link>
+                  </div>
+
+                  <div className="mt-4">
+                    <Button asChild className="w-full venust-glow-hover">
+                      <Link
+                        href="/#lista-de-acesso-antecipado"
+                        onClick={closeMobileMenu}
+                      >
+                        Acesso Antecipado
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </nav>
       </header>
       <span className="flex w-full h-16" />
