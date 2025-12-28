@@ -20,7 +20,8 @@ export function HeroSection() {
                 Planos simples e sem burocracia
               </span>{" "}
               A plataforma que conecta sua barbearia aos clientes do bairro,
-              organiza sua agenda e reduz faltas com lembretes quando habilitados.
+              organiza sua agenda e reduz faltas com lembretes quando
+              habilitados.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
@@ -113,4 +114,3 @@ export function HeroSection() {
     </section>
   );
 }
-

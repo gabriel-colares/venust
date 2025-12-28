@@ -50,7 +50,11 @@ export function FinalCtaSection() {
             autoComplete="email"
             inputMode="email"
           />
-          <Button size="lg" className="h-11 venust-glow-hover px-8 text-lg" type="submit">
+          <Button
+            size="lg"
+            className="h-11 venust-glow-hover px-8 text-lg"
+            type="submit"
+          >
             Entrar na lista
           </Button>
         </form>
@@ -84,4 +88,3 @@ export function FinalCtaSection() {
     </section>
   );
 }
-

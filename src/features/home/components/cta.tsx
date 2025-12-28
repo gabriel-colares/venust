@@ -45,9 +45,9 @@ export function CTASection() {
           </h2>
 
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto text-pretty leading-relaxed">
-            Estamos abrindo a lista para o lançamento. Se você tem uma barbearia,
-            receba convite para o onboarding. Se você é cliente, seja avisado
-            quando o agendamento chegar na sua cidade.
+            Estamos abrindo a lista para o lançamento. Se você tem uma
+            barbearia, receba convite para o onboarding. Se você é cliente, seja
+            avisado quando o agendamento chegar na sua cidade.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -58,7 +58,10 @@ export function CTASection() {
               <div className="text-muted-foreground mb-5">
                 Entre na lista e receba o convite para cadastrar sua barbearia.
               </div>
-              <form className="flex gap-3" onSubmit={handleSubmit("barbershop")}>
+              <form
+                className="flex gap-3"
+                onSubmit={handleSubmit("barbershop")}
+              >
                 <Input
                   value={barbershopEmail}
                   onChange={(e) => setBarbershopEmail(e.target.value)}
@@ -84,7 +87,9 @@ export function CTASection() {
                   asChild
                   className="text-muted-foreground hover:text-primary"
                 >
-                  <Link href="/sou-barbearia">Ver benefícios para barbearias</Link>
+                  <Link href="/sou-barbearia">
+                    Ver benefícios para barbearias
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -151,4 +156,3 @@ export function CTASection() {
     </section>
   );
 }
-

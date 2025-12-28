@@ -30,4 +30,3 @@ export function BarbershopResultsSkeleton({ city }: { city: string }) {
     </div>
   );
 }
-

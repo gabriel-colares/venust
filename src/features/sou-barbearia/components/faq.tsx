@@ -96,4 +96,3 @@ export function FaqSection() {
     </section>
   );
 }
-

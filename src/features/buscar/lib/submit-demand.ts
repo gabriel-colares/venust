@@ -12,4 +12,3 @@ export async function submitDemand(_payload: {
 export function hasBarbershops(_city: string) {
   return false;
 }
-

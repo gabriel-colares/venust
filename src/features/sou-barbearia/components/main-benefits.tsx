@@ -1,4 +1,10 @@
-import { Calendar, CheckCircle, MapPin, MessageSquare, Star } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle,
+  MapPin,
+  MessageSquare,
+  Star,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const mainBenefits = [
@@ -54,8 +60,8 @@ export function MainBenefitsSection() {
             <span className="text-primary">Venust</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Cada funcionalidade foi pensada para resolver problemas reais do seu dia
-            a dia
+            Cada funcionalidade foi pensada para resolver problemas reais do seu
+            dia a dia
           </p>
         </div>
 
@@ -67,13 +73,18 @@ export function MainBenefitsSection() {
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-lg bg-primary/20 flex-shrink-0">
-                  <benefit.icon className="w-8 h-8 text-primary" aria-hidden="true" />
+                  <benefit.icon
+                    className="w-8 h-8 text-primary"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-foreground mb-2">
                     {benefit.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">{benefit.benefit}</p>
+                  <p className="text-muted-foreground mb-4">
+                    {benefit.benefit}
+                  </p>
                   <ul className="space-y-2">
                     {benefit.points.map((p, i) => (
                       <li
@@ -97,4 +108,3 @@ export function MainBenefitsSection() {
     </section>
   );
 }
-

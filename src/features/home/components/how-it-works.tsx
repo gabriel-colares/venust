@@ -4,7 +4,8 @@ const steps = [
   {
     icon: Search,
     title: "Encontre",
-    description: "Busque barbearias na sua região e compare preços e avaliações",
+    description:
+      "Busque barbearias na sua região e compare preços e avaliações",
   },
   {
     icon: Calendar,
@@ -32,8 +33,8 @@ export function HowItWorksSection() {
             Como funciona para <span className="text-primary">você</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Agendar seu corte nunca foi tão fácil. Sem complicação, sem taxa, sem
-            dor de cabeça.
+            Agendar seu corte nunca foi tão fácil. Sem complicação, sem taxa,
+            sem dor de cabeça.
           </p>
         </div>
 
@@ -68,4 +69,3 @@ export function HowItWorksSection() {
     </section>
   );
 }
-
