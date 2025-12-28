@@ -49,7 +49,7 @@ export function HeroSection() {
                   asChild
                 >
                   <Link
-                    href="/auth/signup?role=barbershop"
+                    href="#lista-espera"
                     data-umami-event="sou_barbearia:hero_cadastrar"
                   >
                     <Users className="mr-2" aria-hidden="true" />

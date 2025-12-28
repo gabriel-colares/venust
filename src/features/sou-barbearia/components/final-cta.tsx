@@ -53,7 +53,7 @@ export function FinalCtaSection() {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section id="lista-espera" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
           <Scissors className="w-4 h-4 text-primary" aria-hidden="true" />
