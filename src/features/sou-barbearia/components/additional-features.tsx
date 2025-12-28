@@ -82,18 +82,13 @@ export function AdditionalFeaturesSection() {
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className="p-3 rounded-lg bg-primary/20 flex-shrink-0">
-                  <feature.icon
-                    className="w-6 h-6 text-primary"
-                    aria-hidden="true"
-                  />
+                  <feature.icon className="w-6 h-6 text-primary" aria-hidden="true" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-foreground mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">
-                    {feature.benefit}
-                  </p>
+                  <p className="text-muted-foreground mb-4">{feature.benefit}</p>
                 </div>
               </div>
               <ul className="space-y-2">
@@ -117,3 +112,4 @@ export function AdditionalFeaturesSection() {
     </section>
   );
 }
+

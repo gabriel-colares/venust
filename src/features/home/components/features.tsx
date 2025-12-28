@@ -1,18 +1,10 @@
-import {
-  Clock,
-  CreditCard,
-  MapPin,
-  Shield,
-  Smartphone,
-  Star,
-} from "lucide-react";
+import { Clock, CreditCard, MapPin, Shield, Smartphone, Star } from "lucide-react";
 
 const features = [
   {
     icon: Clock,
     title: "Agendamento 24/7",
-    description:
-      "Agende a qualquer hora, mesmo quando a barbearia está fechada",
+    description: "Agende a qualquer hora, mesmo quando a barbearia está fechada",
   },
   {
     icon: MapPin,
@@ -77,3 +69,4 @@ export function FeaturesSection() {
     </section>
   );
 }
+

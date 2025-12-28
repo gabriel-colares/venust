@@ -1,12 +1,12 @@
-import { CTASection } from "@/components/landing-page/home/cta";
-import { FAQSection } from "@/components/landing-page/home/faq";
-import { FeaturesSection } from "@/components/landing-page/home/features";
-import { HeroSection } from "@/components/landing-page/home/hero";
-import { HowItWorksSection } from "@/components/landing-page/home/how-it-works";
-import { SearchSection } from "@/components/landing-page/home/search";
-import { TestimonialsSection } from "@/components/landing-page/home/testimonials";
 import { Footer } from "@/components/shared/footer";
 import { Navbar } from "@/components/shared/navbar";
+import { CTASection } from "@/features/home/components/cta";
+import { FAQSection } from "@/features/home/components/faq";
+import { FeaturesSection } from "@/features/home/components/features";
+import { HeroSection } from "@/features/home/components/hero";
+import { HowItWorksSection } from "@/features/home/components/how-it-works";
+import { SearchSection } from "@/features/home/components/search";
+import { TestimonialsSection } from "@/features/home/components/testimonials";
 
 export default function HomePage() {
   return (

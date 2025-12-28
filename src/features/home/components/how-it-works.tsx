@@ -3,26 +3,21 @@ import { Calendar, Scissors, Search, Star } from "lucide-react";
 const steps = [
   {
     icon: Search,
-    neonVar: "--color-neon-blue",
     title: "Encontre",
-    description:
-      "Busque barbearias na sua região e compare preços e avaliações",
+    description: "Busque barbearias na sua região e compare preços e avaliações",
   },
   {
     icon: Calendar,
-    neonVar: "--color-neon-cyan",
     title: "Agende",
     description: "Escolha o horário que funciona para você, direto pelo app",
   },
   {
     icon: Scissors,
-    neonVar: "--color-neon-orange",
     title: "Corte",
     description: "Vá até a barbearia no horário marcado e aproveite o serviço",
   },
   {
     icon: Star,
-    neonVar: "--color-neon-pink",
     title: "Avalie",
     description: "Deixe sua avaliação para ajudar outros clientes",
   },
@@ -37,8 +32,8 @@ export function HowItWorksSection() {
             Como funciona para <span className="text-primary">você</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Agendar seu corte nunca foi tão fácil. Sem complicação, sem taxa,
-            sem dor de cabeça.
+            Agendar seu corte nunca foi tão fácil. Sem complicação, sem taxa, sem
+            dor de cabeça.
           </p>
         </div>
 
@@ -46,31 +41,12 @@ export function HowItWorksSection() {
           {steps.map((step, index) => (
             <div
               key={`${step.title}-${index.toString()}`}
-              className="text-center"
+              className="text-center group"
             >
-              <div
-                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 venust-card-glow"
-                style={{
-                  borderColor: `rgb(from var(${step.neonVar}) r g b / 0.25)`,
-                  background: `linear-gradient(135deg, rgb(from var(${step.neonVar}) r g b / 0.12) 0%, transparent 100%)`,
-                  boxShadow: `0 0 24px rgb(from var(${step.neonVar}) r g b / 0.16)`,
-                }}
-              >
-                <step.icon
-                  className="w-8 h-8"
-                  style={{
-                    color: `var(${step.neonVar})`,
-                    filter: `drop-shadow(0 0 12px var(${step.neonVar}))`,
-                  }}
-                />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/15 bg-primary/5 transition-colors group-hover:border-primary/30 group-hover:bg-primary/10">
+                <step.icon className="w-8 h-8 text-primary" />
               </div>
-              <h3
-                className="font-semibold text-lg mb-2"
-                style={{
-                  color: `var(${step.neonVar})`,
-                  textShadow: `0 0 12px rgb(from var(${step.neonVar}) r g b / 0.25)`,
-                }}
-              >
+              <h3 className="font-semibold text-lg mb-2 text-foreground transition-colors group-hover:text-primary">
                 {step.title}
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
@@ -92,3 +68,4 @@ export function HowItWorksSection() {
     </section>
   );
 }
+

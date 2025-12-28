@@ -1,162 +1,186 @@
 "use client";
 
-import { Filter, MapPin, Search } from "lucide-react";
-import { useState } from "react";
-import { BarbershopCard } from "@/components/landing-page/buscar/barbershop-card";
+import { Search } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { type FormEvent, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
 import { Footer } from "@/components/shared/footer";
 import { Navbar } from "@/components/shared/navbar";
+import { BarbershopResultsSkeleton } from "@/components/skeletons/buscar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { BuscarEmptyState } from "@/features/buscar/components/search-empty-state";
+import {
+  hasBarbershops,
+  submitDemand,
+} from "@/features/buscar/lib/submit-demand";
 
-const mockBarbershops = [
-  {
-    id: 1,
-    name: "Barbearia Moderna",
-    image: "/images/modern-barbershop.png",
-    rating: 4.8,
-    reviews: 127,
-    address: "Rua das Flores, 123 - Centro",
-    distance: "0.5 km",
-    nextAvailable: "14:30",
-    services: ["Corte", "Barba", "Sobrancelha"],
-    price: "R$ 25",
-  },
-  {
-    id: 2,
-    name: "Estilo & Classe",
-    image: "/images/elegant-barbershop-with-vintage-chairs.jpg",
-    rating: 4.9,
-    reviews: 89,
-    address: "Av. Principal, 456 - Jardins",
-    distance: "1.2 km",
-    nextAvailable: "15:00",
-    services: ["Corte", "Barba", "Relaxamento"],
-    price: "R$ 30",
-  },
-  {
-    id: 3,
-    name: "Barbershop Premium",
-    image: "/images/luxury-barbershop-with-modern-equipment.jpg",
-    rating: 4.7,
-    reviews: 203,
-    address: "Rua do Comércio, 789 - Vila Nova",
-    distance: "2.1 km",
-    nextAvailable: "16:15",
-    services: ["Corte", "Barba", "Tratamento"],
-    price: "R$ 35",
-  },
-  {
-    id: 4,
-    name: "Corte & Arte",
-    image: "/images/artistic-barbershop-with-creative-styling.jpg",
-    rating: 4.6,
-    reviews: 156,
-    address: "Praça Central, 321 - Centro",
-    distance: "0.8 km",
-    nextAvailable: "17:00",
-    services: ["Corte", "Design", "Coloração"],
-    price: "R$ 28",
-  },
-];
+const emailSchema = z.string().trim().email();
 
 export default function BuscarPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("todos");
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchedCity, setSearchedCity] = useState<string | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [clientEmail, setClientEmail] = useState("");
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const searchRequestRef = useRef(0);
+
+  const normalizedQuery = useMemo(() => searchQuery.trim(), [searchQuery]);
+
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault();
+    const city = normalizedQuery;
+
+    if (!city) {
+      toast.error("Digite sua cidade ou bairro.");
+      return;
+    }
+
+    searchRequestRef.current += 1;
+    const requestId = searchRequestRef.current;
+
+    setSuccessMessage(null);
+    setSearchedCity(city);
+    setIsSearching(true);
+
+    window.setTimeout(() => {
+      if (searchRequestRef.current !== requestId) return;
+      setIsSearching(false);
+    }, 1000);
+  };
+
+  const handleClientSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!searchedCity) return;
+
+    const parsed = emailSchema.safeParse(clientEmail);
+    if (!parsed.success) {
+      toast.error("Digite um e-mail válido.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await submitDemand({
+        email: parsed.data,
+        city: searchedCity,
+        profile: "client",
+        source: "buscar",
+      });
+      setClientEmail("");
+      setSuccessMessage(
+        `Perfeito! 🙌 Vamos avisar você quando o Venust chegar em ${searchedCity}.`,
+      );
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleBarbershopClick = async () => {
+    if (!searchedCity) return;
+
+    setIsSubmitting(true);
+    try {
+      await submitDemand({
+        city: searchedCity,
+        profile: "barbershop",
+        source: "buscar",
+      });
+      router.push(`/sou-barbearia?city=${encodeURIComponent(searchedCity)}`);
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-background dark">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-20">
-        <div className="container mx-auto px-4 py-8">
-          {/* Header da busca */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-foreground mb-4">
-              Encontre sua{" "}
-              <span className="text-primary venust-text-glow">
-                barbearia ideal
-              </span>
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Descubra as melhores barbearias da sua região e agende seu horário
-              em segundos
-            </p>
-          </div>
+        <div className="container mx-auto px-4 pb-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+                Busque sua cidade
+              </h1>
+              <p className="text-muted-foreground mt-3">
+                Veja quando o Venust chega perto de você e seja avisado no
+                lançamento.
+              </p>
+            </div>
 
-          {/* Barra de busca e filtros */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+            <form onSubmit={handleSearch} className="mt-8">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
-                  placeholder="Buscar por nome, serviço ou localização..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 h-12 bg-card border-border focus:border-primary"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Digite sua cidade ou bairro"
+                  className="h-14 pl-12 pr-40 text-lg bg-card border-border focus:border-primary transition-shadow focus:shadow-[0_0_18px_rgba(69,217,166,0.16)]"
+                  autoComplete="address-level2"
                 />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  <Button
+                    type="submit"
+                    className="h-11 venust-glow-hover"
+                    disabled={isSearching}
+                  >
+                    Ver disponibilidade
+                  </Button>
+                </div>
               </div>
-              <Button
-                variant="outline"
-                className="h-12 px-6 border-border hover:border-primary bg-transparent"
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                Filtros
-              </Button>
-            </div>
+            </form>
 
-            {/* Filtros rápidos */}
-            <div className="flex flex-wrap gap-2">
-              {[
-                "todos",
-                "mais próximas",
-                "melhor avaliadas",
-                "disponível agora",
-                "mais baratas",
-              ].map((filter) => (
-                <Button
-                  key={filter}
-                  variant={selectedFilter === filter ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedFilter(filter)}
-                  className={
-                    selectedFilter === filter
-                      ? "bg-primary text-primary-foreground"
-                      : ""
-                  }
-                >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                </Button>
-              ))}
-            </div>
-          </div>
+            {!searchedCity && (
+              <div className="mt-6 text-center text-muted-foreground">
+                Digite uma cidade para ver o status do Venust nessa região.
+              </div>
+            )}
 
-          {/* Resultados */}
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold text-foreground">
-                {mockBarbershops.length} barbearias encontradas
+            {searchedCity && isSearching && (
+              <BarbershopResultsSkeleton city={searchedCity} />
+            )}
+
+            {searchedCity && !isSearching && !hasBarbershops(searchedCity) && (
+              <BuscarEmptyState
+                city={searchedCity}
+                successMessage={successMessage}
+                clientEmail={clientEmail}
+                isSubmitting={isSubmitting}
+                onClientEmailChange={setClientEmail}
+                onClientSubmit={handleClientSubmit}
+                onBarbershopClick={handleBarbershopClick}
+              />
+            )}
+
+            <div className="mt-14 rounded-2xl border border-border/50 bg-card/30 p-6 md:p-8">
+              <h2 className="text-xl font-semibold text-foreground">
+                Como o Venust chega na sua cidade
               </h2>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4" />
-                <span>Ordenar por distância</span>
+              <div className="mt-4 text-muted-foreground leading-relaxed">
+                <div>• Identificamos demanda de clientes</div>
+                <div>• Convidamos barbearias locais</div>
+                <div>• Abrimos a cidade com agenda ativa</div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockBarbershops.map((barbershop) => (
-                <BarbershopCard key={barbershop.id} barbershop={barbershop} />
-              ))}
+            <div className="mt-10 text-center text-muted-foreground">
+              <span>É dono de barbearia?</span>{" "}
+              <Link
+                href="/sou-barbearia"
+                className="text-primary hover:text-primary/80 transition-colors"
+              >
+                Ver benefícios para barbearias →
+              </Link>
             </div>
-          </div>
-
-          {/* CTA para mais resultados */}
-          <div className="text-center mt-12">
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-border hover:border-primary bg-transparent"
-            >
-              Carregar mais barbearias
-            </Button>
           </div>
         </div>
       </div>

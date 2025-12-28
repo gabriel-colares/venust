@@ -1,11 +1,11 @@
-import { AdditionalFeaturesSection } from "@/components/landing-page/sou-barbearia/additional-features";
-import { FaqSection } from "@/components/landing-page/sou-barbearia/faq";
-import { FinalCtaSection } from "@/components/landing-page/sou-barbearia/final-cta";
-import { HeroSection } from "@/components/landing-page/sou-barbearia/hero";
-import { HowItWorksSection } from "@/components/landing-page/sou-barbearia/how-it-works";
-import { MainBenefitsSection } from "@/components/landing-page/sou-barbearia/main-benefits";
 import { Footer } from "@/components/shared/footer";
 import { Navbar } from "@/components/shared/navbar";
+import { AdditionalFeaturesSection } from "@/features/sou-barbearia/components/additional-features";
+import { FaqSection } from "@/features/sou-barbearia/components/faq";
+import { FinalCtaSection } from "@/features/sou-barbearia/components/final-cta";
+import { HeroSection } from "@/features/sou-barbearia/components/hero";
+import { HowItWorksSection } from "@/features/sou-barbearia/components/how-it-works";
+import { MainBenefitsSection } from "@/features/sou-barbearia/components/main-benefits";
 
 export default function SouBarbeariaPage() {
   return (

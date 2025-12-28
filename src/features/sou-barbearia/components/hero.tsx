@@ -20,14 +20,13 @@ export function HeroSection() {
                 Planos simples e sem burocracia
               </span>{" "}
               A plataforma que conecta sua barbearia aos clientes do bairro,
-              organiza sua agenda e reduz faltas com lembretes quando
-              habilitados.
+              organiza sua agenda e reduz faltas com lembretes quando habilitados.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover px-8"
+                className="h-11 bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover px-8"
                 asChild
               >
                 <Link href="/auth/signup?role=barbershop">
@@ -39,7 +38,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary/30 hover:bg-primary/10 hover:text-white bg-transparent text-primary"
+                className="h-11 border-primary/30 hover:bg-primary/10 hover:text-white bg-transparent text-primary"
                 asChild
               >
                 <Link href="#como-funciona">
@@ -77,7 +76,6 @@ export function HeroSection() {
               <div className="absolute inset-0 bg-linear-to-t from-background/20 to-transparent" />
             </div>
 
-            {/* Badge "Mais clientes" */}
             <div className="select-none absolute -top-3 -right-3 bg-background/85 backdrop-blur-sm border border-primary/30 text-foreground px-4 py-3 rounded-xl shadow-lg transition-all duration-300 hover:scale-105 venust-card-glow">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-primary/15 rounded-full flex items-center justify-center text-sm">
@@ -94,7 +92,6 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Badge "Agenda organizada" */}
             <div className="select-none absolute -bottom-3 -left-3 bg-neon-blue/10 backdrop-blur-sm border border-neon-blue/30 text-foreground px-4 py-3 rounded-xl shadow-lg transition-all duration-300 hover:scale-105">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-neon-blue/20 rounded-full flex items-center justify-center text-sm">
@@ -116,3 +113,4 @@ export function HeroSection() {
     </section>
   );
 }
+

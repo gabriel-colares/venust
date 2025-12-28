@@ -62,9 +62,7 @@ export function FAQSection() {
               >
                 <CardHeader
                   className="cursor-pointer"
-                  onClick={() =>
-                    setOpenIndex(openIndex === index ? null : index)
-                  }
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-left text-foreground">
@@ -105,3 +103,4 @@ export function FAQSection() {
     </section>
   );
 }
+

@@ -6,8 +6,7 @@ export function HowItWorksSection() {
       <div className="container max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Como funciona para sua{" "}
-            <span className="text-primary">barbearia</span>
+            Como funciona para sua <span className="text-primary">barbearia</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Em poucos passos sua barbearia estará recebendo agendamentos online
@@ -19,9 +18,7 @@ export function HowItWorksSection() {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 venust-card-glow">
               <Users className="w-8 h-8 text-primary" aria-hidden="true" />
             </div>
-            <h3 className="text-xl font-bold text-foreground mb-2">
-              Cadastrar
-            </h3>
+            <h3 className="text-xl font-bold text-foreground mb-2">Cadastrar</h3>
             <p className="text-muted-foreground">
               Crie sua conta e configure o perfil da barbearia
             </p>
@@ -53,10 +50,7 @@ export function HowItWorksSection() {
 
           <div className="text-center">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 venust-card-glow">
-              <MessageSquare
-                className="w-8 h-8 text-primary"
-                aria-hidden="true"
-              />
+              <MessageSquare className="w-8 h-8 text-primary" aria-hidden="true" />
             </div>
             <h3 className="text-xl font-bold text-foreground mb-2">
               Lembrar clientes
@@ -79,3 +73,4 @@ export function HowItWorksSection() {
     </section>
   );
 }
+
