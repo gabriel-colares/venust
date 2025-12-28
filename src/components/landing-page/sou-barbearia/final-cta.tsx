@@ -31,7 +31,7 @@ export function FinalCtaSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Button
             size="lg"
-            className="venust-glow-hover px-8 py-4 text-lg"
+            className="venust-glow-hover px-8 py-6 text-lg"
             asChild
           >
             <Link href="/auth/signup?role=barbershop">
@@ -41,7 +41,7 @@ export function FinalCtaSection() {
           <Button
             variant="ghost"
             size="lg"
-            className="px-8 py-4 text-lg border border-primary/30 hover:bg-primary/10"
+            className="px-8 py-6 text-lg border border-primary/30 hover:bg-primary/10 hover:text-white/80"
             asChild
           >
             <Link href="/contact">Falar com especialista</Link>
