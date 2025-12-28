@@ -54,11 +54,11 @@ export function FinalCtaSection() {
             <span>Sem compromisso</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-primary/60 rounded-full" />
+            <div className="w-2 h-2 bg-neon-pink rounded-full" />
             <span>Suporte especializado</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-primary/40 rounded-full" />
+            <div className="w-2 h-2 bg-neon-blue rounded-full" />
             <span>Resultados garantidos</span>
           </div>
         </div>
