@@ -1,11 +1,11 @@
-import { ArrowRight, Users } from "lucide-react";
+import { ArrowRight, Check, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="relative flex items-center justify-center venust-gradient-bg py-16">
+    <section className="relative flex items-center justify-center venust-gradient-bg py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           <div className="text-center lg:text-left">
@@ -24,29 +24,48 @@ export function HeroSection() {
               habilitados.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
-              <Button
-                size="lg"
-                className="h-11 bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover px-8"
-                asChild
-              >
-                <Link href="/auth/signup?role=barbershop">
-                  <Users className="mr-2" aria-hidden="true" />
-                  Cadastrar minha barbearia
-                </Link>
-              </Button>
+            <div className="mb-8 max-w-2xl mx-auto lg:mx-0">
+              <div className="grid gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary" aria-hidden="true" />
+                  <span>Sem mensalidade no início</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary" aria-hidden="true" />
+                  <span>Cadastro em menos de 5 minutos</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary" aria-hidden="true" />
+                  <span>Você controla seus horários</span>
+                </div>
+              </div>
+            </div>
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-11 border-primary/30 hover:bg-primary/10 hover:text-white bg-transparent text-primary"
-                asChild
-              >
-                <Link href="#como-funciona">
-                  Ver como funciona
-                  <ArrowRight className="ml-2" aria-hidden="true" />
-                </Link>
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <Button
+                  size="lg"
+                  className="h-11 bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover px-8"
+                  asChild
+                >
+                  <Link href="/auth/signup?role=barbershop">
+                    <Users className="mr-2" aria-hidden="true" />
+                    Cadastrar minha barbearia
+                  </Link>
+                </Button>
+
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="h-11 border-primary/30 hover:bg-primary/10 hover:text-white bg-transparent text-primary"
+                  asChild
+                >
+                  <Link href="#como-funciona">
+                    Ver como funciona
+                    <ArrowRight className="ml-2" aria-hidden="true" />
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             <div className="mt-4 sm:mt-12 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2 sm:gap-6 text-sm text-muted-foreground">
@@ -58,15 +77,11 @@ export function HeroSection() {
                 <div className="w-2 h-2 bg-neon-pink rounded-full" />
                 <span>Agenda organizada</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-neon-blue rounded-full" />
-                <span>Mais clientes</span>
-              </div>
             </div>
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="relative rounded-2xl overflow-hidden border border-primary/20 venust-glow">
+            <div className="relative rounded-2xl overflow-hidden border border-primary/20">
               <Image
                 src="/images/professional-barbershop-owner-working-in-modern-ba.jpg"
                 alt="Barbeiro profissional atendendo cliente em barbearia moderna"
@@ -88,22 +103,6 @@ export function HeroSection() {
                   </span>
                   <span className="text-[10px] text-muted-foreground">
                     Visibilidade online
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="select-none absolute -bottom-3 -left-3 bg-neon-blue/10 backdrop-blur-sm border border-neon-blue/30 text-foreground px-4 py-3 rounded-xl shadow-lg transition-all duration-300 hover:scale-105">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-neon-blue/20 rounded-full flex items-center justify-center text-sm">
-                  📅
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold text-xs text-foreground">
-                    Agenda organizada
-                  </span>
-                  <span className="text-[10px] text-muted-foreground">
-                    Sem conflitos
                   </span>
                 </div>
               </div>

@@ -29,7 +29,10 @@ export function CTASection() {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section
+      id="lista-de-acesso-antecipado"
+      className="py-24 relative overflow-hidden"
+    >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-8">
@@ -85,7 +88,7 @@ export function CTASection() {
                   size="sm"
                   variant="ghost"
                   asChild
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-muted-foreground hover:text-black"
                 >
                   <Link href="/sou-barbearia">
                     Ver benefícios para barbearias
@@ -115,7 +118,7 @@ export function CTASection() {
                 <Button
                   type="submit"
                   variant="outline"
-                  className="border-primary/30 hover:bg-primary/10 bg-transparent text-primary"
+                  className="border-primary/30 hover:bg-primary/10 bg-transparent text-primary hover:text-white"
                 >
                   Entrar
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -126,7 +129,7 @@ export function CTASection() {
                   size="sm"
                   variant="ghost"
                   asChild
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-muted-foreground hover:text-black"
                 >
                   <Link href="/buscar">Explorar barbearias</Link>
                 </Button>
@@ -140,18 +143,18 @@ export function CTASection() {
               <span>Sem spam</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-primary/70 rounded-full"></div>
+              <div className="w-2 h-2 bg-neon-pink rounded-full"></div>
               <span>Lançamento por cidade</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-primary/70 rounded-full"></div>
+              <div className="w-2 h-2 bg-neon-blue rounded-full"></div>
               <span>Convite de onboarding</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-r from-primary/5 via-transparent to-transparent pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none opacity-70" />
     </section>
   );

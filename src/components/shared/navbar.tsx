@@ -72,7 +72,7 @@ export function Navbar() {
             asChild
             className="bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover"
           >
-            <Link href="/dashboard/entrar">Acessar Painel</Link>
+            <Link href="/#lista-de-acesso-antecipado">Acesso Antecipado</Link>
           </Button>
         </nav>
       </header>

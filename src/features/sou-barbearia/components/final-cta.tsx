@@ -52,7 +52,7 @@ export function FinalCtaSection() {
           />
           <Button
             size="lg"
-            className="h-11 venust-glow-hover px-8 text-lg"
+            className="h-11 px-8 text-lg transition-shadow focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-0 hover:shadow-[0_0_18px_rgba(69,217,166,0.16)]"
             type="submit"
           >
             Entrar na lista
