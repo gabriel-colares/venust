@@ -48,7 +48,10 @@ export function HeroSection() {
                   className="h-11 bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover px-8"
                   asChild
                 >
-                  <Link href="/auth/signup?role=barbershop">
+                  <Link
+                    href="/auth/signup?role=barbershop"
+                    data-umami-event="sou_barbearia:hero_cadastrar"
+                  >
                     <Users className="mr-2" aria-hidden="true" />
                     Cadastrar minha barbearia
                   </Link>
@@ -60,7 +63,10 @@ export function HeroSection() {
                   className="h-11 border-primary/30 hover:bg-primary/10 hover:text-white bg-transparent text-primary"
                   asChild
                 >
-                  <Link href="#como-funciona">
+                  <Link
+                    href="#como-funciona"
+                    data-umami-event="sou_barbearia:hero_como_funciona"
+                  >
                     Ver como funciona
                     <ArrowRight className="ml-2" aria-hidden="true" />
                   </Link>

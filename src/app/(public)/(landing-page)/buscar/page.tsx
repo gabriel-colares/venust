@@ -141,7 +141,11 @@ export default function BuscarPage() {
               </p>
             </div>
 
-            <form onSubmit={handleSearch} className="mt-8">
+            <form
+              onSubmit={handleSearch}
+              className="mt-8"
+              data-umami-event="buscar:search_submit"
+            >
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
@@ -203,6 +207,7 @@ export default function BuscarPage() {
               <Link
                 href="/sou-barbearia"
                 className="text-primary hover:text-primary/80 transition-colors"
+                data-umami-event="buscar:link_sou_barbearia"
               >
                 Ver benefícios para barbearias →
               </Link>

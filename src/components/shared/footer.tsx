@@ -9,6 +9,7 @@ export function Footer() {
             <Link
               href="/"
               className="text-2xl font-bold text-primary venust-text-glow"
+              data-umami-event="footer:logo"
             >
               Venust
             </Link>
@@ -24,6 +25,7 @@ export function Footer() {
                 <Link
                   href="#recursos"
                   className="text-muted-foreground hover:text-foreground transition-colors"
+                  data-umami-event="footer:recursos"
                 >
                   Recursos
                 </Link>
@@ -32,6 +34,7 @@ export function Footer() {
                 <Link
                   href="#precos"
                   className="text-muted-foreground hover:text-foreground transition-colors"
+                  data-umami-event="footer:precos"
                 >
                   Preços
                 </Link>
@@ -40,6 +43,7 @@ export function Footer() {
                 <Link
                   href="/buscar"
                   className="text-muted-foreground hover:text-foreground transition-colors"
+                  data-umami-event="footer:buscar"
                 >
                   Buscar barbearias
                 </Link>
@@ -54,6 +58,7 @@ export function Footer() {
                 <Link
                   href="/termos"
                   className="text-muted-foreground hover:text-foreground transition-colors"
+                  data-umami-event="footer:termos"
                 >
                   Termos de uso
                 </Link>
@@ -62,6 +67,7 @@ export function Footer() {
                 <Link
                   href="/privacidade"
                   className="text-muted-foreground hover:text-foreground transition-colors"
+                  data-umami-event="footer:privacidade"
                 >
                   Privacidade
                 </Link>
@@ -78,6 +84,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
+                  data-umami-event="footer:whatsapp_suporte"
                 >
                   WhatsApp Suporte
                 </a>

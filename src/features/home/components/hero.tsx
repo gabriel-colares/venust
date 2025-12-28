@@ -31,7 +31,7 @@ export function HeroSection() {
                 asChild
                 className="bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover px-8"
               >
-                <Link href="#buscar">
+                <Link href="#buscar" data-umami-event="home:hero_buscar">
                   Encontrar barbearias
                   <SearchCheck className="ml-2" />
                 </Link>
@@ -43,7 +43,11 @@ export function HeroSection() {
                 asChild
                 className="border-primary/30 hover:bg-primary/10 bg-transparent text-primary"
               >
-                <Link href="#como-funciona" className="hover:text-slate-200">
+                <Link
+                  href="#como-funciona"
+                  className="hover:text-slate-200"
+                  data-umami-event="home:hero_como_funciona"
+                >
                   Como funciona
                   <CircleQuestionMark className="ml-2" />
                 </Link>

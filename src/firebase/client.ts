@@ -1,5 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { type Analytics, getAnalytics, isSupported } from "firebase/analytics";
+import {
+  type Analytics,
+  getAnalytics,
+  isSupported,
+  logEvent,
+} from "firebase/analytics";
 import { getApp, getApps, initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
@@ -18,13 +23,49 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 // Initialize Analytics safely (Client-side only)
 let analytics: Analytics | null = null;
+let pendingEvents: Array<{
+  name: string;
+  params?: Record<string, unknown>;
+}> = [];
+
+function flushPendingEvents() {
+  if (!analytics) return;
+  const queued = pendingEvents;
+  pendingEvents = [];
+  for (const evt of queued) {
+    logEvent(analytics, evt.name, evt.params);
+  }
+}
 
 if (typeof window !== "undefined") {
   isSupported().then((supported) => {
     if (supported) {
       analytics = getAnalytics(app);
+      flushPendingEvents();
     }
   });
 }
 
 export { app, analytics };
+
+export function trackFirebaseEvent(
+  name: string,
+  params?: Record<string, unknown>,
+) {
+  if (typeof window === "undefined") return;
+  if (analytics) {
+    logEvent(analytics, name, params);
+    return;
+  }
+  if (pendingEvents.length >= 50) return;
+  pendingEvents.push({ name, params });
+}
+
+export function trackFirebasePageView(path: string) {
+  if (typeof window === "undefined") return;
+  trackFirebaseEvent("page_view", {
+    page_path: path,
+    page_location: window.location.href,
+    page_title: document.title,
+  });
+}

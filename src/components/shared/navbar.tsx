@@ -36,6 +36,7 @@ export function Navbar() {
           <Link
             href="/"
             className="flex items-center gap-3 text-2xl font-bold text-primary venust-text-glow"
+            data-umami-event="nav:logo"
           >
             <Image
               alt="Venust logo"
@@ -56,6 +57,7 @@ export function Navbar() {
                   ? "text-primary font-semibold venust-text-glow"
                   : "text-muted-foreground hover:text-foreground"
               }`}
+              data-umami-event="nav:home"
             >
               Início
             </Link>
@@ -66,6 +68,7 @@ export function Navbar() {
                   ? "text-primary font-semibold venust-text-glow"
                   : "text-muted-foreground hover:text-foreground"
               }`}
+              data-umami-event="nav:buscar"
             >
               Buscar Barbearias
             </Link>
@@ -76,6 +79,7 @@ export function Navbar() {
                   ? "text-primary font-semibold venust-text-glow"
                   : "text-muted-foreground hover:text-foreground"
               }`}
+              data-umami-event="nav:sou_barbearia"
             >
               Sou Barbearia
             </Link>
@@ -85,7 +89,12 @@ export function Navbar() {
             asChild
             className="hidden md:inline-flex bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover"
           >
-            <Link href="/#lista-de-acesso-antecipado">Acesso Antecipado</Link>
+            <Link
+              href="/#lista-de-acesso-antecipado"
+              data-umami-event="nav:acesso_antecipado"
+            >
+              Acesso Antecipado
+            </Link>
           </Button>
 
           <div className="md:hidden">
@@ -97,6 +106,7 @@ export function Navbar() {
                   size="icon"
                   aria-label="Abrir menu"
                   className="text-muted-foreground hover:text-foreground"
+                  data-umami-event="nav:open_menu"
                 >
                   <Menu className="size-5" aria-hidden="true" />
                 </Button>
@@ -111,6 +121,7 @@ export function Navbar() {
                     href="/"
                     onClick={closeMobileMenu}
                     className="flex items-center gap-3 text-lg font-bold text-primary"
+                    data-umami-event="nav:logo_mobile"
                   >
                     <Image
                       alt="Venust logo"
@@ -133,6 +144,7 @@ export function Navbar() {
                           ? "text-primary font-semibold"
                           : "text-muted-foreground hover:text-foreground hover:bg-accent"
                       }`}
+                      data-umami-event="nav:home_mobile"
                     >
                       Início
                     </Link>
@@ -144,6 +156,7 @@ export function Navbar() {
                           ? "text-primary font-semibold"
                           : "text-muted-foreground hover:text-foreground hover:bg-accent"
                       }`}
+                      data-umami-event="nav:buscar_mobile"
                     >
                       Buscar Barbearias
                     </Link>
@@ -155,6 +168,7 @@ export function Navbar() {
                           ? "text-primary font-semibold"
                           : "text-muted-foreground hover:text-foreground hover:bg-accent"
                       }`}
+                      data-umami-event="nav:sou_barbearia_mobile"
                     >
                       Sou Barbearia
                     </Link>
@@ -165,6 +179,7 @@ export function Navbar() {
                       <Link
                         href="/#lista-de-acesso-antecipado"
                         onClick={closeMobileMenu}
+                        data-umami-event="nav:acesso_antecipado_mobile"
                       >
                         Acesso Antecipado
                       </Link>

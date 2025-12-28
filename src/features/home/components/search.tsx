@@ -95,7 +95,11 @@ function SearchEmptyState({
               <div className="text-muted-foreground text-sm mb-4 leading-relaxed">
                 Quero ser avisado quando o Venust chegar em {city}.
               </div>
-              <form className="flex gap-3" onSubmit={handleSubmit("client")}>
+              <form
+                className="flex gap-3"
+                onSubmit={handleSubmit("client")}
+                data-umami-event="home:lead_client_submit"
+              >
                 <Input
                   value={clientEmail}
                   onChange={(e) => setClientEmail(e.target.value)}
@@ -122,6 +126,7 @@ function SearchEmptyState({
               <form
                 className="flex gap-3"
                 onSubmit={handleSubmit("barbershop")}
+                data-umami-event="home:lead_barbershop_submit"
               >
                 <Input
                   value={barbershopEmail}
@@ -236,7 +241,11 @@ export function SearchSection() {
             </p>
           </div>
 
-          <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
+          <form
+            onSubmit={handleSearch}
+            className="max-w-3xl mx-auto"
+            data-umami-event="home:search_submit"
+          >
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input

@@ -120,6 +120,7 @@ export function CTASection() {
               <form
                 className="flex gap-3"
                 onSubmit={handleSubmit("barbershop")}
+                data-umami-event="home:cta_barbershop_submit"
               >
                 <Input
                   value={barbershopEmail}
@@ -148,7 +149,10 @@ export function CTASection() {
                   asChild
                   className="text-muted-foreground hover:text-black"
                 >
-                  <Link href="/sou-barbearia">
+                  <Link
+                    href="/sou-barbearia"
+                    data-umami-event="home:cta_link_sou_barbearia"
+                  >
                     Ver benefícios para barbearias
                   </Link>
                 </Button>
@@ -162,7 +166,11 @@ export function CTASection() {
               <div className="text-muted-foreground mb-5">
                 Seja avisado quando o Venust estiver disponível.
               </div>
-              <form className="flex gap-3" onSubmit={handleSubmit("client")}>
+              <form
+                className="flex gap-3"
+                onSubmit={handleSubmit("client")}
+                data-umami-event="home:cta_client_submit"
+              >
                 <Input
                   value={clientEmail}
                   onChange={(e) => setClientEmail(e.target.value)}
@@ -191,7 +199,9 @@ export function CTASection() {
                   asChild
                   className="text-muted-foreground hover:text-black"
                 >
-                  <Link href="/buscar">Explorar barbearias</Link>
+                  <Link href="/buscar" data-umami-event="home:cta_link_buscar">
+                    Explorar barbearias
+                  </Link>
                 </Button>
               </div>
             </div>

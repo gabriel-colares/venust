@@ -65,6 +65,8 @@ export function FAQSection() {
                   onClick={() =>
                     setOpenIndex(openIndex === index ? null : index)
                   }
+                  data-umami-event="home:faq_toggle"
+                  data-umami-event-index={index.toString()}
                 >
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-left text-foreground">

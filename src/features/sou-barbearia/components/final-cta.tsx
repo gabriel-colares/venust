@@ -75,6 +75,7 @@ export function FinalCtaSection() {
         <form
           onSubmit={handleSubmit}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-10 max-w-2xl mx-auto"
+          data-umami-event="sou_barbearia:final_cta_submit"
         >
           <Input
             value={email}

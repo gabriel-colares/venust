@@ -58,6 +58,8 @@ export function FaqSection() {
                 <CardHeader
                   className="cursor-pointer"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  data-umami-event="sou_barbearia:faq_toggle"
+                  data-umami-event-index={index.toString()}
                 >
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-left text-foreground">

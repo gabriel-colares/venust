@@ -63,7 +63,11 @@ export function BuscarEmptyState({
               <div className="text-muted-foreground text-sm mt-2">
                 Quero agendar quando chegar
               </div>
-              <form className="mt-5" onSubmit={onClientSubmit}>
+              <form
+                className="mt-5"
+                onSubmit={onClientSubmit}
+                data-umami-event="buscar:lead_client_submit"
+              >
                 <div className="flex gap-3">
                   <Input
                     value={clientEmail}
@@ -94,7 +98,11 @@ export function BuscarEmptyState({
               <div className="text-muted-foreground text-sm mt-2">
                 Quero cadastrar minha barbearia nessa cidade
               </div>
-              <form className="mt-5" onSubmit={onBarbershopSubmit}>
+              <form
+                className="mt-5"
+                onSubmit={onBarbershopSubmit}
+                data-umami-event="buscar:lead_barbershop_submit"
+              >
                 <div className="flex gap-3">
                   <Input
                     value={barbershopEmail}
