@@ -24,7 +24,7 @@ export function Navbar() {
         >
           <Image
             alt="Venust logo"
-            src={"/assets/venust-icon.svg"}
+            src={"/images/venust-icon.svg"}
             width={32}
             height={32}
             style={{ width: "32px", height: "32px" }}

@@ -12,7 +12,7 @@ const mockBarbershops = [
   {
     id: 1,
     name: "Barbearia Moderna",
-    image: "/modern-barbershop.png",
+    image: "/images/modern-barbershop.png",
     rating: 4.8,
     reviews: 127,
     address: "Rua das Flores, 123 - Centro",
@@ -24,7 +24,7 @@ const mockBarbershops = [
   {
     id: 2,
     name: "Estilo & Classe",
-    image: "/elegant-barbershop-with-vintage-chairs.jpg",
+    image: "/images/elegant-barbershop-with-vintage-chairs.jpg",
     rating: 4.9,
     reviews: 89,
     address: "Av. Principal, 456 - Jardins",
@@ -36,7 +36,7 @@ const mockBarbershops = [
   {
     id: 3,
     name: "Barbershop Premium",
-    image: "/luxury-barbershop-with-modern-equipment.jpg",
+    image: "/images/luxury-barbershop-with-modern-equipment.jpg",
     rating: 4.7,
     reviews: 203,
     address: "Rua do Comércio, 789 - Vila Nova",
@@ -48,7 +48,7 @@ const mockBarbershops = [
   {
     id: 4,
     name: "Corte & Arte",
-    image: "/artistic-barbershop-with-creative-styling.jpg",
+    image: "/images/artistic-barbershop-with-creative-styling.jpg",
     rating: 4.6,
     reviews: 156,
     address: "Praça Central, 321 - Centro",

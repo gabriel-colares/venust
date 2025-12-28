@@ -13,7 +13,7 @@ const mockBarbershops = [
     location: "Vila Madalena, SP",
     tag: "Corte masculino",
     rating: 4.8,
-    image: "/modern-barbershop.png",
+    image: "/images/modern-barbershop.png",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const mockBarbershops = [
     location: "Ipanema, RJ",
     tag: "Navalha tradicional",
     rating: 4.9,
-    image: "/elegant-barbershop-with-vintage-chairs.jpg",
+    image: "/images/elegant-barbershop-with-vintage-chairs.jpg",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const mockBarbershops = [
     location: "Savassi, BH",
     tag: "Corte e barba",
     rating: 4.7,
-    image: "/luxury-barbershop-with-modern-equipment.jpg",
+    image: "/images/luxury-barbershop-with-modern-equipment.jpg",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ const mockBarbershops = [
     location: "Moinhos, POA",
     tag: "Estilo vintage",
     rating: 4.6,
-    image: "/modern-barbershop.png",
+    image: "/images/modern-barbershop.png",
   },
   {
     id: 5,
@@ -45,7 +45,7 @@ const mockBarbershops = [
     location: "Boa Viagem, Recife",
     tag: "Cortes modernos",
     rating: 4.8,
-    image: "/professional-barbershop-owner-working-in-modern-ba.jpg",
+    image: "/images/professional-barbershop-owner-working-in-modern-ba.jpg",
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ const mockBarbershops = [
     location: "Centro, Curitiba",
     tag: "Tradição familiar",
     rating: 4.9,
-    image: "/modern-barbershop.png",
+    image: "/images/modern-barbershop.png",
   },
 ];
 
