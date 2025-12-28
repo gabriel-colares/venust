@@ -69,13 +69,13 @@ export function SignupForm({
       {...props}
     >
       <div className="flex flex-col items-start gap-2">
-        <h1 className="text-3xl text-left font-medium">
+        <h1 className="text-xl sm:text-2xl md:text-3xl text-left font-medium">
           Gerencie seu estabelecimento e veja seu lucro aumentar.
         </h1>
       </div>
 
-      <div className="grid gap-6">
-        <div className="flex justify-between items-start gap-6">
+      <div className="grid gap-4 md:gap-6">
+        <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:items-start md:justify-between">
           <div className="w-full grid gap-2">
             <Label className="text-[#9B9C9E]" htmlFor="name">
               Nome
@@ -84,7 +84,7 @@ export function SignupForm({
               id="name"
               placeholder="Digite aqui"
               autoComplete="name"
-              className="h-12 bg-[#1A1D21] border-[#363A3D]"
+              className="h-11 bg-[#1A1D21] border-[#363A3D]"
               {...register("name")}
             />
             {errors.name && (
@@ -103,7 +103,7 @@ export function SignupForm({
               type="email"
               placeholder="E-mail"
               autoComplete="email"
-              className="h-12 bg-[#1A1D21] border-[#363A3D]"
+              className="h-11 bg-[#1A1D21] border-[#363A3D]"
               {...register("email")}
             />
             {errors.email && (
@@ -114,7 +114,7 @@ export function SignupForm({
           </div>
         </div>
 
-        <div className="flex justify-between items-start gap-6">
+        <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:items-start md:justify-between">
           <div className="w-full grid gap-2">
             <Label className="text-[#9B9C9E]" htmlFor="password">
               Senha
@@ -124,7 +124,7 @@ export function SignupForm({
               type="password"
               placeholder="Digite sua senha aqui"
               autoComplete="new-password"
-              className="h-12 bg-[#1A1D21] border-[#363A3D]"
+              className="h-11 bg-[#1A1D21] border-[#363A3D]"
               {...register("password")}
             />
             {errors.password && (
@@ -143,7 +143,7 @@ export function SignupForm({
               type="password"
               placeholder="Reescreva sua senha"
               autoComplete="new-password"
-              className="h-12 bg-[#1A1D21] border-[#363A3D]"
+              className="h-11 bg-[#1A1D21] border-[#363A3D]"
               {...register("confirmPassword")}
             />
             {errors.confirmPassword && (
@@ -173,7 +173,10 @@ export function SignupForm({
               className="text-[#CDCECF] text-sm font-medium leading-none"
             >
               Eu concordo com os{" "}
-              <Link href={"#terms-of-services"} className="text-venust-primary">
+              <Link
+                href={"#terms-of-services"}
+                className="text-venust-primary hover:underline"
+              >
                 Termos de Serviço.
               </Link>
             </label>
@@ -189,13 +192,13 @@ export function SignupForm({
         {/* Botão de criar conta */}
         <Button
           type="submit"
-          className="w-full h-12 flex items-center justify-center"
+          className="w-full h-11 flex items-center justify-center"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <LoaderCircle className="animate-spin" size={20} />
           ) : (
-            <>Criar conta gratuita</>
+            <Fragment>Criar conta gratuita</Fragment>
           )}
         </Button>
 
@@ -208,7 +211,7 @@ export function SignupForm({
         {/* Botão de login com Google */}
         <Button
           variant="outline"
-          className="w-full h-12 flex items-center justify-center hover:text-white/90 gap-2"
+          className="w-full h-11 flex items-center justify-center hover:text-white/90 hover:bg-[#1A1D21]/40 gap-2"
           onClick={() => signIn("google", { redirectTo: "/dashboard" })}
           disabled={isSubmitting}
         >

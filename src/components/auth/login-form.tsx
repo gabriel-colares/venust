@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -72,7 +73,7 @@ export function LoginForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="h-12 bg-transparent border border-gray-700 text-white placeholder:text-gray-400"
+            className="h-11 bg-[#1A1D21] border border-gray-700 text-white placeholder:text-gray-400"
           />
         </div>
         <div className="grid gap-2">
@@ -91,7 +92,7 @@ export function LoginForm({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="h-12 bg-transparent border border-gray-700 text-white placeholder:text-gray-400"
+            className="h-11 bg-[#1A1D21] border border-gray-700 text-white placeholder:text-gray-400"
           />
         </div>
 
@@ -99,7 +100,7 @@ export function LoginForm({
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full h-12 bg-white text-black hover:bg-gray-200 disabled:opacity-50"
+          className="w-full h-11 bg-white text-black hover:bg-gray-200 disabled:opacity-50"
         >
           {isLoading ? "Entrando..." : "Login"}
         </Button>
@@ -118,7 +119,7 @@ export function LoginForm({
           variant="outline"
           type="button"
           onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          className="w-full h-12 border border-gray-700 bg-transparent text-white hover:bg-gray-900 hover:text-white/80"
+          className="w-full h-11 flex items-center justify-center hover:text-white/90 hover:bg-[#1A1D21]/40 gap-2"
         >
           <SvgGoogle className="mr-2 size-4" />
           Login com Google
@@ -128,9 +129,12 @@ export function LoginForm({
       {/* Footer */}
       <div className="text-center text-sm text-muted-foreground">
         Não possui uma conta ainda?{" "}
-        <a href="/cadastrar" className="text-[#45D9A6] hover:underline">
+        <Link
+          href="/dashboard/cadastrar"
+          className="text-[#45D9A6] hover:underline"
+        >
           Criar conta
-        </a>
+        </Link>
       </div>
     </form>
   );
