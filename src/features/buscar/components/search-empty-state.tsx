@@ -7,18 +7,22 @@ export function BuscarEmptyState({
   city,
   successMessage,
   clientEmail,
+  barbershopEmail,
   isSubmitting,
   onClientEmailChange,
   onClientSubmit,
-  onBarbershopClick,
+  onBarbershopEmailChange,
+  onBarbershopSubmit,
 }: {
   city: string;
   successMessage: string | null;
   clientEmail: string;
+  barbershopEmail: string;
   isSubmitting: boolean;
   onClientEmailChange: (value: string) => void;
   onClientSubmit: (e: FormEvent) => void;
-  onBarbershopClick: () => void;
+  onBarbershopEmailChange: (value: string) => void;
+  onBarbershopSubmit: (e: FormEvent) => void;
 }) {
   return (
     <div className="mt-10 rounded-2xl border border-border/50 bg-card/40 p-6 md:p-8">
@@ -90,17 +94,28 @@ export function BuscarEmptyState({
               <div className="text-muted-foreground text-sm mt-2">
                 Quero cadastrar minha barbearia nessa cidade
               </div>
-              <div className="mt-5">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full"
-                  onClick={onBarbershopClick}
-                  disabled={isSubmitting}
-                >
-                  Sou barbearia em {city}
-                </Button>
-              </div>
+              <form className="mt-5" onSubmit={onBarbershopSubmit}>
+                <div className="flex gap-3">
+                  <Input
+                    value={barbershopEmail}
+                    onChange={(e) => onBarbershopEmailChange(e.target.value)}
+                    type="email"
+                    required
+                    placeholder="Seu e-mail"
+                    className="bg-background/60"
+                    autoComplete="email"
+                    inputMode="email"
+                    disabled={isSubmitting}
+                  />
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    disabled={isSubmitting}
+                  >
+                    Sou barbearia em {city}
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         )}

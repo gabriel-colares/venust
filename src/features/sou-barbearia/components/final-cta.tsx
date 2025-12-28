@@ -1,7 +1,6 @@
 "use client";
 
 import { Scissors } from "lucide-react";
-import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -9,11 +8,48 @@ import { Input } from "@/components/ui/input";
 
 export function FinalCtaSection() {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    toast.success("Inscrição recebida! Vamos te chamar para o onboarding.");
-    setEmail("");
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/lista-espera", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          segment: "barbershop",
+          source: "sou-barbearia-final-cta",
+        }),
+      });
+
+      if (!res.ok && res.status !== 200) {
+        throw new Error("Failed to submit waitlist");
+      }
+
+      const data = (await res.json().catch(() => null)) as {
+        status?: "created" | "exists";
+      } | null;
+      const status =
+        data?.status === "created" || data?.status === "exists"
+          ? data.status
+          : res.status === 201
+            ? "created"
+            : "exists";
+
+      if (status === "created") {
+        toast.success("Inscrição recebida! Vamos te chamar para o onboarding.");
+      } else {
+        toast.info("Você já está na lista.");
+      }
+
+      setEmail("");
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -49,26 +85,17 @@ export function FinalCtaSection() {
             className="h-11 bg-background/60"
             autoComplete="email"
             inputMode="email"
+            disabled={isSubmitting}
           />
           <Button
             size="lg"
             className="h-11 px-8 text-lg transition-shadow focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-0 hover:shadow-[0_0_18px_rgba(69,217,166,0.16)]"
             type="submit"
+            disabled={isSubmitting}
           >
             Entrar na lista
           </Button>
         </form>
-
-        <div className="mb-12">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="px-8 py-6 text-lg border border-primary/30 hover:bg-primary/10 hover:text-white/80"
-            asChild
-          >
-            <Link href="/dashboard/entrar">Já tenho conta</Link>
-          </Button>
-        </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">

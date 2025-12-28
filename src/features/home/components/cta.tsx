@@ -12,19 +12,75 @@ type LeadSegment = "barbershop" | "client";
 export function CTASection() {
   const [barbershopEmail, setBarbershopEmail] = useState("");
   const [clientEmail, setClientEmail] = useState("");
+  const [isSubmittingBarbershop, setIsSubmittingBarbershop] = useState(false);
+  const [isSubmittingClient, setIsSubmittingClient] = useState(false);
 
-  const handleSubmit = (segment: LeadSegment) => (e: FormEvent) => {
+  const submitWaitlist = async (payload: {
+    email: string;
+    segment: LeadSegment;
+    source: "home-cta";
+  }) => {
+    const res = await fetch("/api/lista-espera", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok && res.status !== 200) {
+      throw new Error("Failed to submit waitlist");
+    }
+
+    const data = (await res.json().catch(() => null)) as {
+      status?: "created" | "exists";
+    } | null;
+
+    if (data?.status === "created" || data?.status === "exists") {
+      return data.status;
+    }
+
+    return res.status === 201 ? "created" : "exists";
+  };
+
+  const handleSubmit = (segment: LeadSegment) => async (e: FormEvent) => {
     e.preventDefault();
-    toast.success(
-      segment === "barbershop"
-        ? "Inscrição recebida! Vamos te chamar para o onboarding."
-        : "Inscrição recebida! Avisaremos quando estiver disponível.",
-    );
+    const email = segment === "barbershop" ? barbershopEmail : clientEmail;
 
     if (segment === "barbershop") {
-      setBarbershopEmail("");
+      setIsSubmittingBarbershop(true);
     } else {
-      setClientEmail("");
+      setIsSubmittingClient(true);
+    }
+
+    try {
+      const status = await submitWaitlist({
+        email,
+        segment,
+        source: "home-cta",
+      });
+
+      if (status === "created") {
+        toast.success(
+          segment === "barbershop"
+            ? "Inscrição recebida! Vamos te chamar para o onboarding."
+            : "Inscrição recebida! Avisaremos quando estiver disponível.",
+        );
+      } else {
+        toast.info("Você já está na lista.");
+      }
+
+      if (segment === "barbershop") {
+        setBarbershopEmail("");
+      } else {
+        setClientEmail("");
+      }
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      if (segment === "barbershop") {
+        setIsSubmittingBarbershop(false);
+      } else {
+        setIsSubmittingClient(false);
+      }
     }
   };
 
@@ -74,10 +130,12 @@ export function CTASection() {
                   className="bg-background/60"
                   autoComplete="email"
                   inputMode="email"
+                  disabled={isSubmittingBarbershop}
                 />
                 <Button
                   type="submit"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover"
+                  disabled={isSubmittingBarbershop}
                 >
                   Entrar
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -114,11 +172,13 @@ export function CTASection() {
                   className="bg-background/60"
                   autoComplete="email"
                   inputMode="email"
+                  disabled={isSubmittingClient}
                 />
                 <Button
                   type="submit"
                   variant="outline"
                   className="border-primary/30 hover:bg-primary/10 bg-transparent text-primary hover:text-white"
+                  disabled={isSubmittingClient}
                 >
                   Entrar
                   <ArrowRight className="ml-2 w-5 h-5" />

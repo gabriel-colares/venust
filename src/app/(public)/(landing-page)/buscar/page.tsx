@@ -26,6 +26,7 @@ export default function BuscarPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [clientEmail, setClientEmail] = useState("");
+  const [barbershopEmail, setBarbershopEmail] = useState("");
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const searchRequestRef = useRef(0);
 
@@ -66,12 +67,18 @@ export default function BuscarPage() {
 
     setIsSubmitting(true);
     try {
-      await submitDemand({
+      const result = await submitDemand({
         email: parsed.data,
         city: searchedCity,
         profile: "client",
         source: "buscar",
       });
+
+      if (result.status === "created") {
+        toast.success("Recebido!");
+      } else {
+        toast.info("Você já está na lista dessa cidade.");
+      }
       setClientEmail("");
       setSuccessMessage(
         `Perfeito! 🙌 Vamos avisar você quando o Venust chegar em ${searchedCity}.`,
@@ -83,16 +90,33 @@ export default function BuscarPage() {
     }
   };
 
-  const handleBarbershopClick = async () => {
+  const handleBarbershopSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
     if (!searchedCity) return;
+
+    const parsed = emailSchema.safeParse(barbershopEmail);
+    if (!parsed.success) {
+      toast.error("Digite um e-mail válido.");
+      return;
+    }
 
     setIsSubmitting(true);
     try {
-      await submitDemand({
+      const result = await submitDemand({
+        email: parsed.data,
         city: searchedCity,
         profile: "barbershop",
         source: "buscar",
       });
+
+      if (result.status === "created") {
+        toast.success("Inscrição recebida! Vamos te chamar para o onboarding.");
+      } else {
+        toast.info("Você já está na lista dessa cidade.");
+      }
+
+      setBarbershopEmail("");
       router.push(`/sou-barbearia?city=${encodeURIComponent(searchedCity)}`);
     } catch {
       toast.error("Não foi possível enviar agora. Tente novamente.");
@@ -154,10 +178,12 @@ export default function BuscarPage() {
                 city={searchedCity}
                 successMessage={successMessage}
                 clientEmail={clientEmail}
+                barbershopEmail={barbershopEmail}
                 isSubmitting={isSubmitting}
                 onClientEmailChange={setClientEmail}
                 onClientSubmit={handleClientSubmit}
-                onBarbershopClick={handleBarbershopClick}
+                onBarbershopEmailChange={setBarbershopEmail}
+                onBarbershopSubmit={handleBarbershopSubmit}
               />
             )}
 
