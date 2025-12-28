@@ -1,4 +1,4 @@
-import { Search, Calendar, Scissors, Star } from "lucide-react";
+import { Calendar, Scissors, Search, Star } from "lucide-react";
 
 const steps = [
   {
@@ -40,7 +40,10 @@ export function HowItWorksSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-screen">
           {steps.map((step, index) => (
-            <div key={index} className="text-center">
+            <div
+              key={`${step.title}-${index.toString()}`}
+              className="text-center"
+            >
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 venust-card-glow">
                 <step.icon className="w-8 h-8 text-primary" />
               </div>

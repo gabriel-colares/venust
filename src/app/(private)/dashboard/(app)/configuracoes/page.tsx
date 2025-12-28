@@ -1,34 +1,22 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Settings,
-  User,
-  CreditCard,
-  MessageSquare,
   Bell,
-  Shield,
-  Store,
-  Smartphone,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  Save,
-  Edit,
-  Check,
-  X,
-  AlertTriangle,
-  Clock,
-  Calendar,
-  DollarSign,
-  FileText,
+  Copy,
+  CreditCard,
   Download,
   ExternalLink,
-  Copy,
-  Trash2,
-  Plus,
+  Eye,
+  EyeOff,
+  FileText,
+  Lock,
+  Save,
+  Shield,
+  Smartphone,
+  Store,
+  User,
 } from "lucide-react";
+import { type ChangeEvent, type ReactNode, useState } from "react";
 
 // Mock data
 const barbershopSettings = {
@@ -132,7 +120,38 @@ const policiesData = {
   },
 };
 
-function SettingsCard({ title, description, children }: any) {
+type SettingsCardProps = {
+  title: string;
+  description: string;
+  children: ReactNode;
+};
+
+type FormFieldProps = {
+  label: ReactNode;
+  children: ReactNode;
+};
+
+type InputProps = {
+  value: string | number;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  type?: string;
+  disabled?: boolean;
+};
+
+type TextareaProps = {
+  value: string;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  placeholder?: string;
+  rows?: number;
+};
+
+type ToggleProps = {
+  enabled: boolean;
+  onChange: (enabled: boolean) => void;
+};
+
+function SettingsCard({ title, description, children }: SettingsCardProps) {
   return (
     <div className="bg-[#1a1d21] rounded-[12px] p-[24px] border border-[#363a3d]">
       <div className="mb-[20px]">
@@ -146,10 +165,10 @@ function SettingsCard({ title, description, children }: any) {
   );
 }
 
-function FormField({ label, children }: any) {
+function FormField({ label, children }: FormFieldProps) {
   return (
     <div className="space-y-[8px]">
-      <label className="text-white text-[14px] font-medium">{label}</label>
+      <div className="text-white text-[14px] font-medium">{label}</div>
       {children}
     </div>
   );
@@ -161,7 +180,7 @@ function Input({
   placeholder,
   type = "text",
   disabled = false,
-}: any) {
+}: InputProps) {
   return (
     <input
       type={type}
@@ -174,7 +193,7 @@ function Input({
   );
 }
 
-function Textarea({ value, onChange, placeholder, rows = 3 }: any) {
+function Textarea({ value, onChange, placeholder, rows = 3 }: TextareaProps) {
   return (
     <textarea
       value={value}
@@ -186,9 +205,10 @@ function Textarea({ value, onChange, placeholder, rows = 3 }: any) {
   );
 }
 
-function Toggle({ enabled, onChange }: any) {
+function Toggle({ enabled, onChange }: ToggleProps) {
   return (
     <button
+      type="button"
       onClick={() => onChange(!enabled)}
       className={`relative w-[44px] h-[24px] rounded-full transition-colors ${
         enabled ? "bg-[#32f1b4]" : "bg-[#363a3d]"
@@ -259,6 +279,7 @@ export default function ConfiguracoesPage() {
                     return (
                       <button
                         key={tab.id}
+                        type="button"
                         onClick={() => setActiveTab(tab.id)}
                         className={`w-full flex items-center gap-[12px] px-[12px] py-[10px] rounded-[8px] text-[14px] font-medium transition-colors ${
                           activeTab === tab.id
@@ -288,7 +309,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="Nome da Barbearia">
                         <Input
                           value={barbershop.name}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setBarbershop({
                               ...barbershop,
                               name: e.target.value,
@@ -300,7 +321,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="Telefone">
                         <Input
                           value={barbershop.phone}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setBarbershop({
                               ...barbershop,
                               phone: e.target.value,
@@ -312,7 +333,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="WhatsApp">
                         <Input
                           value={barbershop.whatsapp}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setBarbershop({
                               ...barbershop,
                               whatsapp: e.target.value,
@@ -324,7 +345,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="E-mail">
                         <Input
                           value={barbershop.email}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setBarbershop({
                               ...barbershop,
                               email: e.target.value,
@@ -337,7 +358,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="Instagram">
                         <Input
                           value={barbershop.instagram}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setBarbershop({
                               ...barbershop,
                               instagram: e.target.value,
@@ -350,6 +371,7 @@ export default function ConfiguracoesPage() {
                         <div className="flex items-center gap-[8px]">
                           <Input value={barbershop.website} disabled />
                           <button
+                            type="button"
                             onClick={handleCopyUrl}
                             className="p-[10px] bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[8px] text-[#9b9c9e] transition-colors"
                             title="Copiar URL"
@@ -357,6 +379,7 @@ export default function ConfiguracoesPage() {
                             <Copy className="size-[16px]" />
                           </button>
                           <button
+                            type="button"
                             className="p-[10px] bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[8px] text-[#9b9c9e] transition-colors"
                             title="Abrir URL"
                           >
@@ -368,7 +391,7 @@ export default function ConfiguracoesPage() {
                     <FormField label="Endereço">
                       <Input
                         value={barbershop.address}
-                        onChange={(e: any) =>
+                        onChange={(e) =>
                           setBarbershop({
                             ...barbershop,
                             address: e.target.value,
@@ -380,7 +403,7 @@ export default function ConfiguracoesPage() {
                     <FormField label="Descrição">
                       <Textarea
                         value={barbershop.description}
-                        onChange={(e: any) =>
+                        onChange={(e) =>
                           setBarbershop({
                             ...barbershop,
                             description: e.target.value,
@@ -390,6 +413,7 @@ export default function ConfiguracoesPage() {
                       />
                     </FormField>
                     <button
+                      type="button"
                       onClick={handleSave}
                       className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors flex items-center gap-[8px]"
                     >
@@ -442,10 +466,16 @@ export default function ConfiguracoesPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-[12px]">
-                      <button className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors">
+                      <button
+                        type="button"
+                        className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors"
+                      >
                         Alterar Plano
                       </button>
-                      <button className="bg-[#363a3d] hover:bg-[#4a4f54] rounded-[8px] px-[16px] py-[10px] text-[#9b9c9e] text-[14px] font-medium transition-colors">
+                      <button
+                        type="button"
+                        className="bg-[#363a3d] hover:bg-[#4a4f54] rounded-[8px] px-[16px] py-[10px] text-[#9b9c9e] text-[14px] font-medium transition-colors"
+                      >
                         Cancelar Assinatura
                       </button>
                     </div>
@@ -467,7 +497,10 @@ export default function ConfiguracoesPage() {
                           </div>
                         </div>
                       </div>
-                      <button className="text-[#32f1b4] hover:text-[#2cd9a0] text-[14px] font-medium transition-colors">
+                      <button
+                        type="button"
+                        className="text-[#32f1b4] hover:text-[#2cd9a0] text-[14px] font-medium transition-colors"
+                      >
                         Alterar
                       </button>
                     </div>
@@ -494,7 +527,10 @@ export default function ConfiguracoesPage() {
                               </div>
                             </div>
                           </div>
-                          <button className="p-[8px] text-[#9b9c9e] hover:text-white hover:bg-[#363a3d] rounded-[6px] transition-colors">
+                          <button
+                            type="button"
+                            className="p-[8px] text-[#9b9c9e] hover:text-white hover:bg-[#363a3d] rounded-[6px] transition-colors"
+                          >
                             <Download className="size-[16px]" />
                           </button>
                         </div>
@@ -537,7 +573,7 @@ export default function ConfiguracoesPage() {
                           <FormField label="Número do WhatsApp">
                             <Input
                               value={integrations.whatsapp.phone}
-                              onChange={(e: any) =>
+                              onChange={(e) =>
                                 setIntegrations({
                                   ...integrations,
                                   whatsapp: {
@@ -560,7 +596,7 @@ export default function ConfiguracoesPage() {
                                 value={
                                   integrations.whatsapp.templates.confirmation
                                 }
-                                onChange={(e: any) =>
+                                onChange={(e) =>
                                   setIntegrations({
                                     ...integrations,
                                     whatsapp: {
@@ -579,7 +615,7 @@ export default function ConfiguracoesPage() {
                             <FormField label="Lembrete">
                               <Textarea
                                 value={integrations.whatsapp.templates.reminder}
-                                onChange={(e: any) =>
+                                onChange={(e) =>
                                   setIntegrations({
                                     ...integrations,
                                     whatsapp: {
@@ -600,7 +636,7 @@ export default function ConfiguracoesPage() {
                                 value={
                                   integrations.whatsapp.templates.cancellation
                                 }
-                                onChange={(e: any) =>
+                                onChange={(e) =>
                                   setIntegrations({
                                     ...integrations,
                                     whatsapp: {
@@ -620,6 +656,7 @@ export default function ConfiguracoesPage() {
                       )}
                     </div>
                     <button
+                      type="button"
                       onClick={handleSave}
                       className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors flex items-center gap-[8px]"
                     >
@@ -719,7 +756,7 @@ export default function ConfiguracoesPage() {
                         <Input
                           type="time"
                           value={notifications.schedule.start}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setNotifications({
                               ...notifications,
                               schedule: {
@@ -734,7 +771,7 @@ export default function ConfiguracoesPage() {
                         <Input
                           type="time"
                           value={notifications.schedule.end}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setNotifications({
                               ...notifications,
                               schedule: {
@@ -747,6 +784,7 @@ export default function ConfiguracoesPage() {
                       </FormField>
                     </div>
                     <button
+                      type="button"
                       onClick={handleSave}
                       className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors flex items-center gap-[8px]"
                     >
@@ -768,7 +806,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="Nome Completo">
                         <Input
                           value={account.name}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setAccount({ ...account, name: e.target.value })
                           }
                           placeholder="Seu nome completo"
@@ -777,7 +815,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="E-mail">
                         <Input
                           value={account.email}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setAccount({ ...account, email: e.target.value })
                           }
                           placeholder="seu@email.com"
@@ -787,7 +825,7 @@ export default function ConfiguracoesPage() {
                       <FormField label="Telefone">
                         <Input
                           value={account.phone}
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setAccount({ ...account, phone: e.target.value })
                           }
                           placeholder="(11) 99999-9999"
@@ -801,6 +839,7 @@ export default function ConfiguracoesPage() {
                       Último acesso: {account.lastLogin}
                     </div>
                     <button
+                      type="button"
                       onClick={handleSave}
                       className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors flex items-center gap-[8px]"
                     >
@@ -819,12 +858,11 @@ export default function ConfiguracoesPage() {
                           <Input
                             type={showPassword ? "text" : "password"}
                             value={newPassword}
-                            onChange={(e: any) =>
-                              setNewPassword(e.target.value)
-                            }
+                            onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="Digite sua nova senha"
                           />
                           <button
+                            type="button"
                             onClick={() => setShowPassword(!showPassword)}
                             className="absolute right-[12px] top-[50%] translate-y-[-50%] text-[#9b9c9e] hover:text-white"
                           >
@@ -840,14 +878,13 @@ export default function ConfiguracoesPage() {
                         <Input
                           type={showPassword ? "text" : "password"}
                           value={confirmPassword}
-                          onChange={(e: any) =>
-                            setConfirmPassword(e.target.value)
-                          }
+                          onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="Confirme sua nova senha"
                         />
                       </FormField>
                     </div>
                     <button
+                      type="button"
                       className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors flex items-center gap-[8px]"
                       disabled={!newPassword || newPassword !== confirmPassword}
                     >
@@ -895,12 +932,12 @@ export default function ConfiguracoesPage() {
                             <Input
                               type="number"
                               value={policies.cancellation.hours}
-                              onChange={(e: any) =>
+                              onChange={(e) =>
                                 setPolicies({
                                   ...policies,
                                   cancellation: {
                                     ...policies.cancellation,
-                                    hours: parseInt(e.target.value),
+                                    hours: parseInt(e.target.value, 10),
                                   },
                                 })
                               }
@@ -910,12 +947,12 @@ export default function ConfiguracoesPage() {
                             <Input
                               type="number"
                               value={policies.cancellation.penalty}
-                              onChange={(e: any) =>
+                              onChange={(e) =>
                                 setPolicies({
                                   ...policies,
                                   cancellation: {
                                     ...policies.cancellation,
-                                    penalty: parseInt(e.target.value),
+                                    penalty: parseInt(e.target.value, 10),
                                   },
                                 })
                               }
@@ -957,12 +994,12 @@ export default function ConfiguracoesPage() {
                             <Input
                               type="number"
                               value={policies.delay.minutes}
-                              onChange={(e: any) =>
+                              onChange={(e) =>
                                 setPolicies({
                                   ...policies,
                                   delay: {
                                     ...policies.delay,
-                                    minutes: parseInt(e.target.value),
+                                    minutes: parseInt(e.target.value, 10),
                                   },
                                 })
                               }
@@ -971,7 +1008,7 @@ export default function ConfiguracoesPage() {
                           <FormField label="Ação">
                             <select
                               value={policies.delay.action}
-                              onChange={(e: any) =>
+                              onChange={(e) =>
                                 setPolicies({
                                   ...policies,
                                   delay: {
@@ -1025,12 +1062,12 @@ export default function ConfiguracoesPage() {
                             <Input
                               type="number"
                               value={policies.noShow.penalty}
-                              onChange={(e: any) =>
+                              onChange={(e) =>
                                 setPolicies({
                                   ...policies,
                                   noShow: {
                                     ...policies.noShow,
-                                    penalty: parseInt(e.target.value),
+                                    penalty: parseInt(e.target.value, 10),
                                   },
                                 })
                               }
@@ -1059,6 +1096,7 @@ export default function ConfiguracoesPage() {
                       )}
                     </div>
                     <button
+                      type="button"
                       onClick={handleSave}
                       className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[10px] text-black text-[14px] font-semibold transition-colors flex items-center gap-[8px]"
                     >

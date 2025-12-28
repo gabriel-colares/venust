@@ -1,4 +1,4 @@
-import { Users, Scissors, Calendar, MessageSquare } from "lucide-react";
+import { Calendar, MessageSquare, Scissors, Users } from "lucide-react";
 
 export function HowItWorksSection() {
   return (

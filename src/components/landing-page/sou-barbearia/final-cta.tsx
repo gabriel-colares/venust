@@ -1,6 +1,6 @@
+import { Scissors } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Scissors } from "lucide-react";
 
 export function FinalCtaSection() {
   return (

@@ -9,7 +9,8 @@ import {
   Sparkles,
   User,
 } from "lucide-react";
-
+import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -27,8 +28,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export function NavUser() {
   const { data, status } = useSession();

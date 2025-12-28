@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const testimonials = [
   {
@@ -40,12 +40,15 @@ export function TestimonialsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="bg-card border-border">
+            <Card
+              key={`${testimonial.name}-${index.toString()}`}
+              className="bg-card border-border"
+            >
               <CardContent className="p-6">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star
-                      key={i}
+                      key={`${testimonial.name}-${i.toString()}`}
                       className="w-4 h-4 fill-primary text-primary"
                     />
                   ))}

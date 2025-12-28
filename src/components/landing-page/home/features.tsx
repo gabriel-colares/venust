@@ -1,10 +1,10 @@
 import {
   Clock,
-  MapPin,
-  Star,
   CreditCard,
+  MapPin,
   Shield,
   Smartphone,
+  Star,
 } from "lucide-react";
 
 const features = [
@@ -58,7 +58,7 @@ export function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div
-              key={index}
+              key={`${feature.title}-${index.toString()}`}
               className="text-center p-6 venust-card-glow rounded-lg"
             >
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">

@@ -1,7 +1,7 @@
-import { SignupForm } from "@/components/auth/signup-form";
-import { SvgVenust } from "@/components/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
+import { SignupForm } from "@/components/auth/signup-form";
+import { SvgVenust } from "@/components/ui/icons";
 
 export default function SignupPage() {
   return (

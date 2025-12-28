@@ -6,8 +6,8 @@ import {
   Link2,
   Scissors,
   Settings,
-  Store,
   Star,
+  Store,
   Users,
 } from "lucide-react";
 

@@ -1,6 +1,7 @@
+import { CircleQuestionMark, SearchCheck } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CircleQuestionMark, SearchCheck } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -67,12 +68,14 @@ export function HeroSection() {
 
           <div className="relative hidden lg:block">
             <div className="relative rounded-2xl overflow-hidden border border-primary/20 venust-glow">
-              <img
+              <Image
                 src="/images/5075.jpg"
                 alt="Clientes satisfeitos em barbearias modernas"
                 className="w-full h-[500px] object-cover"
+                width={500}
+                height={300}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-background/20 to-transparent"></div>
             </div>
           </div>
         </div>

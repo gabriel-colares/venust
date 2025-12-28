@@ -1,27 +1,54 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Scissors,
-  Plus,
-  Search,
-  Filter,
+  ArrowDown,
+  ArrowUp,
   Edit,
-  Trash2,
   Eye,
   EyeOff,
-  Clock,
-  DollarSign,
-  Users,
+  Filter,
   Package,
-  ArrowUp,
-  ArrowDown,
-  Settings,
+  Plus,
+  Scissors,
+  Search,
   Star,
+  Trash2,
 } from "lucide-react";
+import { type FormEvent, useState } from "react";
+
+type ServiceCategory = "individual" | "combo";
+
+type Service = {
+  id: number;
+  name: string;
+  duration: number;
+  price: number;
+  bufferBefore: number;
+  bufferAfter: number;
+  minAdvance: number;
+  isPublic: boolean;
+  order: number;
+  category: ServiceCategory;
+  description: string;
+  bookings: number;
+  comboServices?: number[];
+};
+
+type ServiceFormData = {
+  name: string;
+  duration: number;
+  price: number;
+  bufferBefore: number;
+  bufferAfter: number;
+  minAdvance: number;
+  isPublic: boolean;
+  category: ServiceCategory;
+  description: string;
+  comboServices: number[];
+};
 
 // Mock data
-const services = [
+const services: Service[] = [
   {
     id: 1,
     name: "Corte de Cabelo",
@@ -81,6 +108,15 @@ const services = [
   },
 ];
 
+type ServiceCardProps = {
+  service: Service;
+  onEdit: (service: Service) => void;
+  onDelete: (serviceId: number) => void;
+  onToggleVisibility: (serviceId: number) => void;
+  onMoveUp: (serviceId: number) => void;
+  onMoveDown: (serviceId: number) => void;
+};
+
 function ServiceCard({
   service,
   onEdit,
@@ -88,7 +124,7 @@ function ServiceCard({
   onToggleVisibility,
   onMoveUp,
   onMoveDown,
-}: any) {
+}: ServiceCardProps) {
   return (
     <div className="bg-[#1a1d21] rounded-[12px] p-[20px] border border-[#363a3d] hover:border-[#32f1b4]/30 transition-colors">
       <div className="flex items-start justify-between mb-[16px]">
@@ -123,6 +159,7 @@ function ServiceCard({
         </div>
         <div className="flex items-center gap-[8px]">
           <button
+            type="button"
             onClick={() => onToggleVisibility(service.id)}
             className={`p-[8px] rounded-[6px] transition-colors ${
               service.isPublic
@@ -138,6 +175,7 @@ function ServiceCard({
             )}
           </button>
           <button
+            type="button"
             onClick={() => onMoveUp(service.id)}
             className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]"
             title="Mover para cima"
@@ -145,6 +183,7 @@ function ServiceCard({
             <ArrowUp className="size-[16px]" />
           </button>
           <button
+            type="button"
             onClick={() => onMoveDown(service.id)}
             className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]"
             title="Mover para baixo"
@@ -152,12 +191,14 @@ function ServiceCard({
             <ArrowDown className="size-[16px]" />
           </button>
           <button
+            type="button"
             onClick={() => onEdit(service)}
             className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]"
           >
             <Edit className="size-[16px]" />
           </button>
           <button
+            type="button"
             onClick={() => onDelete(service.id)}
             className="text-[#9b9c9e] hover:text-red-400 transition-colors p-[8px]"
           >
@@ -207,23 +248,42 @@ function ServiceCard({
   );
 }
 
-function ServiceModal({ service, onClose, onSave }: any) {
-  const [formData, setFormData] = useState(
-    service || {
-      name: "",
-      duration: 30,
-      price: 0,
-      bufferBefore: 0,
-      bufferAfter: 0,
-      minAdvance: 60,
-      isPublic: true,
-      category: "individual",
-      description: "",
-      comboServices: [],
-    },
-  );
+type ServiceModalProps = {
+  service: Service | null;
+  onClose: () => void;
+  onSave: (data: ServiceFormData) => void;
+};
 
-  const handleSubmit = (e: any) => {
+function ServiceModal({ service, onClose, onSave }: ServiceModalProps) {
+  const initialFormData: ServiceFormData = service
+    ? {
+        name: service.name,
+        duration: service.duration,
+        price: service.price,
+        bufferBefore: service.bufferBefore,
+        bufferAfter: service.bufferAfter,
+        minAdvance: service.minAdvance,
+        isPublic: service.isPublic,
+        category: service.category,
+        description: service.description,
+        comboServices: service.comboServices ?? [],
+      }
+    : {
+        name: "",
+        duration: 30,
+        price: 0,
+        bufferBefore: 0,
+        bufferAfter: 0,
+        minAdvance: 60,
+        isPublic: true,
+        category: "individual",
+        description: "",
+        comboServices: [],
+      };
+
+  const [formData, setFormData] = useState<ServiceFormData>(initialFormData);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave(formData);
     onClose();
@@ -238,6 +298,7 @@ function ServiceModal({ service, onClose, onSave }: any) {
               {service ? "Editar Serviço" : "Novo Serviço"}
             </div>
             <button
+              type="button"
               onClick={onClose}
               className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]"
             >
@@ -249,10 +310,14 @@ function ServiceModal({ service, onClose, onSave }: any) {
         <form onSubmit={handleSubmit} className="p-[24px] space-y-[20px]">
           <div className="grid grid-cols-2 gap-[16px]">
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-name"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Nome do Serviço
               </label>
               <input
+                id="service-name"
                 type="text"
                 value={formData.name}
                 onChange={(e) =>
@@ -263,13 +328,20 @@ function ServiceModal({ service, onClose, onSave }: any) {
               />
             </div>
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-category"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Categoria
               </label>
               <select
+                id="service-category"
                 value={formData.category}
                 onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
+                  setFormData({
+                    ...formData,
+                    category: e.target.value as ServiceCategory,
+                  })
                 }
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
               >
@@ -280,10 +352,14 @@ function ServiceModal({ service, onClose, onSave }: any) {
           </div>
 
           <div>
-            <label className="block text-white text-[14px] font-medium mb-[8px]">
+            <label
+              htmlFor="service-description"
+              className="block text-white text-[14px] font-medium mb-[8px]"
+            >
               Descrição
             </label>
             <textarea
+              id="service-description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
@@ -294,16 +370,20 @@ function ServiceModal({ service, onClose, onSave }: any) {
 
           <div className="grid grid-cols-2 gap-[16px]">
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-duration"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Duração (minutos)
               </label>
               <input
+                id="service-duration"
                 type="number"
                 value={formData.duration}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    duration: parseInt(e.target.value),
+                    duration: parseInt(e.target.value, 10),
                   })
                 }
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
@@ -312,10 +392,14 @@ function ServiceModal({ service, onClose, onSave }: any) {
               />
             </div>
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-price"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Preço (R$)
               </label>
               <input
+                id="service-price"
                 type="number"
                 value={formData.price}
                 onChange={(e) =>
@@ -334,16 +418,20 @@ function ServiceModal({ service, onClose, onSave }: any) {
 
           <div className="grid grid-cols-3 gap-[16px]">
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-buffer-before"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Buffer Antes (min)
               </label>
               <input
+                id="service-buffer-before"
                 type="number"
                 value={formData.bufferBefore}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    bufferBefore: parseInt(e.target.value),
+                    bufferBefore: parseInt(e.target.value, 10),
                   })
                 }
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
@@ -351,16 +439,20 @@ function ServiceModal({ service, onClose, onSave }: any) {
               />
             </div>
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-buffer-after"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Buffer Depois (min)
               </label>
               <input
+                id="service-buffer-after"
                 type="number"
                 value={formData.bufferAfter}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    bufferAfter: parseInt(e.target.value),
+                    bufferAfter: parseInt(e.target.value, 10),
                   })
                 }
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
@@ -368,16 +460,20 @@ function ServiceModal({ service, onClose, onSave }: any) {
               />
             </div>
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="service-minAdvance"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Antecedência (min)
               </label>
               <input
+                id="service-minAdvance"
                 type="number"
                 value={formData.minAdvance}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    minAdvance: parseInt(e.target.value),
+                    minAdvance: parseInt(e.target.value, 10),
                   })
                 }
                 className="w-full bg-[#0d0f10] border border-[#363a3d] rounded-[8px] px-[12px] py-[8px] text-white text-[14px] outline-none focus:border-[#32f1b4]"
@@ -424,7 +520,7 @@ function ServiceModal({ service, onClose, onSave }: any) {
 
 export default function ServicosPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [showModal, setShowModal] = useState(false);
 
   const filteredServices = services.filter(
@@ -433,7 +529,7 @@ export default function ServicosPage() {
       service.description.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const handleEdit = (service: any) => {
+  const handleEdit = (service: Service) => {
     setSelectedService(service);
     setShowModal(true);
   };
@@ -458,7 +554,7 @@ export default function ServicosPage() {
     console.log("Mover para baixo:", serviceId);
   };
 
-  const handleSave = (serviceData: any) => {
+  const handleSave = (serviceData: ServiceFormData) => {
     // Implementar lógica de salvamento
     console.log("Salvar serviço:", serviceData);
   };
@@ -477,6 +573,7 @@ export default function ServicosPage() {
             </div>
           </div>
           <button
+            type="button"
             onClick={() => {
               setSelectedService(null);
               setShowModal(true);
@@ -508,7 +605,10 @@ export default function ServicosPage() {
                 />
               </div>
             </div>
-            <button className="bg-[#1a1d21] h-[40px] px-[16px] rounded-[8px] flex items-center gap-[8px] border border-[#363a3d] hover:bg-[#1f2226] transition-colors">
+            <button
+              type="button"
+              className="bg-[#1a1d21] h-[40px] px-[16px] rounded-[8px] flex items-center gap-[8px] border border-[#363a3d] hover:bg-[#1f2226] transition-colors"
+            >
               <Filter className="size-[16px] text-[#9b9c9e]" />
               <span className="text-[#9b9c9e] text-[14px]">Filtros</span>
             </button>

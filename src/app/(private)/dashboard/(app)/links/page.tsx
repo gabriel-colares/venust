@@ -1,26 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Link,
-  QrCode,
+  Calendar,
   Copy,
-  Share2,
+  Download,
+  Edit,
   ExternalLink,
   Eye,
   EyeOff,
-  Edit,
-  Trash2,
-  Plus,
-  Download,
-  MessageCircle,
-  Instagram,
   Globe,
-  User,
+  Instagram,
+  Link,
+  MessageCircle,
+  Plus,
+  QrCode,
   Scissors,
-  Calendar,
-  Settings,
+  Trash2,
+  User,
 } from "lucide-react";
+import { useState } from "react";
 
 type LinkType = "general" | "service" | "barber";
 
@@ -204,6 +202,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
           <div className="flex items-center gap-[8px] text-[#32f1b4] text-[12px] font-mono">
             <span>https://{link.url}</span>
             <button
+              type="button"
               onClick={copyLink}
               className="text-[#9b9c9e] hover:text-[#32f1b4] transition-colors"
               title="Copiar link"
@@ -211,6 +210,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
               <Copy className="size-[14px]" />
             </button>
             <button
+              type="button"
               onClick={() => window.open(`https://${link.url}`, "_blank")}
               className="text-[#9b9c9e] hover:text-[#32f1b4] transition-colors"
               title="Abrir link"
@@ -222,6 +222,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
 
         <div className="flex items-center gap-[8px]">
           <button
+            type="button"
             onClick={() => onToggle(link.id)}
             className={`p-[6px] rounded-[6px] transition-colors ${
               link.active
@@ -237,6 +238,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
             )}
           </button>
           <button
+            type="button"
             onClick={() => onEdit(link)}
             className="p-[6px] text-[#9b9c9e] hover:text-[#32f1b4] hover:bg-[#363a3d] rounded-[6px] transition-colors"
             title="Editar"
@@ -244,6 +246,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
             <Edit className="size-[16px]" />
           </button>
           <button
+            type="button"
             onClick={() => onDelete(link.id)}
             className="p-[6px] text-[#9b9c9e] hover:text-red-400 hover:bg-red-500/20 rounded-[6px] transition-colors"
             title="Excluir"
@@ -272,6 +275,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
       {/* Ações */}
       <div className="flex items-center gap-[8px]">
         <button
+          type="button"
           onClick={() => setShowQR(!showQR)}
           className="flex-1 bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[8px] py-[8px] text-[#9b9c9e] hover:text-black text-[12px] font-medium transition-colors flex items-center justify-center gap-[6px]"
         >
@@ -279,6 +283,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
           QR Code
         </button>
         <button
+          type="button"
           onClick={shareWhatsApp}
           className="flex-1 bg-[#25d366] hover:bg-[#20b858] rounded-[8px] py-[8px] text-white text-[12px] font-medium transition-colors flex items-center justify-center gap-[6px]"
         >
@@ -286,6 +291,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
           WhatsApp
         </button>
         <button
+          type="button"
           onClick={shareInstagram}
           className="flex-1 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-80 rounded-[8px] py-[8px] text-white text-[12px] font-medium transition-opacity flex items-center justify-center gap-[6px]"
         >
@@ -300,6 +306,7 @@ function LinkCard({ link, onEdit, onDelete, onToggle }: LinkCardProps) {
           <div className="flex items-center justify-between mb-[12px]">
             <div className="text-white text-[14px] font-medium">QR Code</div>
             <button
+              type="button"
               onClick={downloadQR}
               className="text-[#32f1b4] hover:text-[#2cd9a0] transition-colors"
               title="Baixar QR Code"
@@ -373,6 +380,7 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
             {link ? "Editar Link" : "Novo Link"}
           </div>
           <button
+            type="button"
             onClick={onClose}
             className="text-[#9b9c9e] hover:text-white transition-colors"
           >
@@ -382,10 +390,14 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
 
         <div className="space-y-[16px]">
           <div>
-            <label className="block text-white text-[14px] font-medium mb-[8px]">
+            <label
+              htmlFor="link-name"
+              className="block text-white text-[14px] font-medium mb-[8px]"
+            >
               Nome do Link
             </label>
             <input
+              id="link-name"
               type="text"
               value={formData.name}
               onChange={(e) =>
@@ -397,10 +409,14 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
           </div>
 
           <div>
-            <label className="block text-white text-[14px] font-medium mb-[8px]">
+            <label
+              htmlFor="link-description"
+              className="block text-white text-[14px] font-medium mb-[8px]"
+            >
               Descrição
             </label>
             <textarea
+              id="link-description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
@@ -411,10 +427,14 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
           </div>
 
           <div>
-            <label className="block text-white text-[14px] font-medium mb-[8px]">
+            <label
+              htmlFor="link-type"
+              className="block text-white text-[14px] font-medium mb-[8px]"
+            >
               Tipo de Link
             </label>
             <select
+              id="link-type"
               value={formData.type}
               onChange={(e) =>
                 setFormData({
@@ -434,10 +454,14 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
 
           {formData.type === "service" && (
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="link-service"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Serviço
               </label>
               <select
+                id="link-service"
                 value={formData.serviceId ?? ""}
                 onChange={(e) => {
                   const val = e.target.value ? Number(e.target.value) : null;
@@ -457,10 +481,14 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
 
           {formData.type === "barber" && (
             <div>
-              <label className="block text-white text-[14px] font-medium mb-[8px]">
+              <label
+                htmlFor="link-barber"
+                className="block text-white text-[14px] font-medium mb-[8px]"
+              >
                 Profissional
               </label>
               <select
+                id="link-barber"
                 value={formData.barberId ?? ""}
                 onChange={(e) => {
                   const val = e.target.value ? Number(e.target.value) : null;
@@ -505,12 +533,14 @@ function LinkModal({ link, onSave, onClose }: LinkModalProps) {
 
         <div className="flex items-center gap-[12px] mt-[24px]">
           <button
+            type="button"
             onClick={onClose}
             className="flex-1 bg-[#363a3d] hover:bg-[#4a4f54] rounded-[8px] py-[10px] text-[#9b9c9e] text-[14px] font-medium transition-colors"
           >
             Cancelar
           </button>
           <button
+            type="button"
             onClick={handleSave}
             className="flex-1 bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] py-[10px] text-black text-[14px] font-semibold transition-colors"
           >
@@ -531,7 +561,7 @@ export default function LinksPage() {
   const filteredLinks = links.filter(
     (link) =>
       link.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      link.description.toLowerCase().includes(searchTerm.toLowerCase())
+      link.description.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleEdit = (link: LinkItem) => {
@@ -546,8 +576,8 @@ export default function LinksPage() {
   const handleToggle = (linkId: number) => {
     setLinks(
       links.map((link) =>
-        link.id === linkId ? { ...link, active: !link.active } : link
-      )
+        link.id === linkId ? { ...link, active: !link.active } : link,
+      ),
     );
   };
 
@@ -555,8 +585,8 @@ export default function LinksPage() {
     if (editingLink) {
       setLinks(
         links.map((link) =>
-          link.id === editingLink.id ? { ...link, ...linkData } : link
-        )
+          link.id === editingLink.id ? { ...link, ...linkData } : link,
+        ),
       );
     } else {
       const newLink: LinkItem = {
@@ -575,7 +605,7 @@ export default function LinksPage() {
   const totalClicks = links.reduce((sum, link) => sum + link.clicks, 0);
   const totalConversions = links.reduce(
     (sum, link) => sum + link.conversions,
-    0
+    0,
   );
   const activeLinks = links.filter((link) => link.active).length;
 
@@ -593,6 +623,7 @@ export default function LinksPage() {
             </div>
           </div>
           <button
+            type="button"
             onClick={() => setShowModal(true)}
             className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[8px] flex items-center gap-[8px] transition-colors"
           >

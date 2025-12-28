@@ -1,7 +1,7 @@
-import { LoginForm } from "@/components/auth/login-form";
-import { SvgVenust } from "@/components/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
+import { LoginForm } from "@/components/auth/login-form";
+import { SvgVenust } from "@/components/ui/icons";
 
 export default function LoginPage() {
   return (

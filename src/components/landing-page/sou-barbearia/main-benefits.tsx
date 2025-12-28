@@ -1,11 +1,11 @@
-import { Card } from "@/components/ui/card";
 import {
-  MapPin,
   Calendar,
-  Star,
-  MessageSquare,
   CheckCircle,
+  MapPin,
+  MessageSquare,
+  Star,
 } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const mainBenefits = [
   {
@@ -67,7 +67,10 @@ export function MainBenefitsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {mainBenefits.map((benefit, idx) => (
-            <Card key={idx} className="p-6 border border-border/50">
+            <Card
+              key={`${benefit.title}-${idx.toString()}`}
+              className="p-6 border border-border/50"
+            >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-lg bg-primary/20 flex-shrink-0">
                   <benefit.icon
@@ -85,7 +88,7 @@ export function MainBenefitsSection() {
                   <ul className="space-y-2">
                     {benefit.points.map((p, i) => (
                       <li
-                        key={i}
+                        key={`${benefit.title}-${i.toString()}`}
                         className="flex items-start gap-2 text-sm text-muted-foreground"
                       >
                         <CheckCircle

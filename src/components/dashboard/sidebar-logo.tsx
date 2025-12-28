@@ -1,12 +1,12 @@
 "use client";
 
+import { SvgVenust, SvgVenustFull } from "@/components/ui/icons";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { SvgVenust, SvgVenustFull } from "@/components/ui/icons";
 
 export function SidebarLogo() {
   const { isMobile, state } = useSidebar();

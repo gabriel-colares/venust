@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const faqs = [
@@ -55,10 +55,9 @@ export function FAQSection() {
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
-
             return (
               <Card
-                key={index}
+                key={`${faq.question}-${index.toString()}`}
                 className={`border border-border/50 overflow-hidden ${isOpen ? "gap-2" : "gap-0"}`}
               >
                 <CardHeader

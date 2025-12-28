@@ -1,21 +1,21 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  type ComponentType,
+  type MouseEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import {
-  useEffect,
-  useMemo,
-  useState,
-  type ComponentType,
-  type MouseEvent,
-} from "react";
 
 type IconComponent = ComponentType<{ className?: string }>;
 
@@ -76,12 +76,14 @@ export function SidebarNavItem({
 
   const isActive = useMemo(() => {
     if (effectiveExact) return pathname === url;
-    return pathname === url || pathname.startsWith(url + "/");
+    return pathname === url || pathname.startsWith(`${url}/`);
   }, [pathname, url, effectiveExact]);
 
   useEffect(() => {
+    if (!isLoading) return;
+    if (!isActive) return;
     setIsLoading(false);
-  }, [pathname]);
+  }, [isActive, isLoading]);
 
   const handleClick = (e: MouseEvent) => {
     if (disabled || isLoading || isActive) {
@@ -116,11 +118,9 @@ export function SidebarNavItem({
       )}
       <span className="text-base">{label}</span>
       {typeof badgeCount === "number" && badgeCount > 0 && (
-        <span
-          className="ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-semibold bg-white/10 text-white"
-          aria-label={`${badgeCount} novas`}
-        >
-          {badgeCount > 99 ? "99+" : badgeCount}
+        <span className="ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-semibold bg-white/10 text-white">
+          <span className="sr-only">{badgeCount} novas</span>
+          <span aria-hidden="true">{badgeCount > 99 ? "99+" : badgeCount}</span>
         </span>
       )}
     </>

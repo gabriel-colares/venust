@@ -1,5 +1,6 @@
+import { Clock, MapPin, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Star, MapPin, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface BarbershopMiniCardProps {
@@ -21,13 +22,15 @@ export function BarbershopMiniCard({ barbershop }: BarbershopMiniCardProps) {
       <Card className="bg-card border-border hover:border-primary/50 transition-all duration-150 venust-glow-hover cursor-pointer overflow-hidden pt-0">
         <CardContent className="p-0">
           <div className="relative h-48 overflow-hidden">
-            <img
+            <Image
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               src={
                 barbershop.image ||
                 `/placeholder.svg?height=200&width=300&query=modern barbershop interior ${barbershop.name}`
               }
               alt={`Interior da ${barbershop.name}`}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              width={300}
+              height={200}
             />
             <div className="absolute top-3 right-3">
               <span className="text-xs bg-primary/90 text-primary-foreground px-2 py-1 rounded-full font-medium">

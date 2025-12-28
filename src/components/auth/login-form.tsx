@@ -1,12 +1,12 @@
 "use client";
 
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SvgGoogle } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
 
 export function LoginForm({
   className,
@@ -80,7 +80,7 @@ export function LoginForm({
             <Label htmlFor="password" className="text-muted-foreground">
               Senha
             </Label>
-            <a href="#" className="text-sm text-[#45D9A6] hover:underline">
+            <a href="#email" className="text-sm text-[#45D9A6] hover:underline">
               Esqueceu sua senha?
             </a>
           </div>

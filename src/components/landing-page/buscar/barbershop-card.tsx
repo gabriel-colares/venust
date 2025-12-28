@@ -1,9 +1,10 @@
 "use client";
 
-import { Star, MapPin, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Clock, MapPin, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface BarbershopCardProps {
   barbershop: {
@@ -25,10 +26,12 @@ export function BarbershopCard({ barbershop }: BarbershopCardProps) {
     <Link href={`/barbearia/${barbershop.id}`} className="block">
       <div className="venust-card-glow rounded-lg overflow-hidden bg-card hover:scale-105 transition-all duration-300 cursor-pointer">
         <div className="relative">
-          <img
+          <Image
+            className="w-full h-48 object-cover"
             src={barbershop.image || "/placeholder.svg"}
             alt={barbershop.name}
-            className="w-full h-48 object-cover"
+            width={400}
+            height={200}
           />
           <div className="absolute top-3 right-3">
             <Badge className="bg-primary text-primary-foreground">
@@ -68,7 +71,11 @@ export function BarbershopCard({ barbershop }: BarbershopCardProps) {
 
           <div className="flex flex-wrap gap-1 mb-4">
             {barbershop.services.map((service, index) => (
-              <Badge key={index} variant="secondary" className="text-xs">
+              <Badge
+                key={`${service}-${index.toString()}`}
+                variant="secondary"
+                className="text-xs"
+              >
                 {service}
               </Badge>
             ))}
@@ -83,7 +90,6 @@ export function BarbershopCard({ barbershop }: BarbershopCardProps) {
               className="bg-primary text-primary-foreground hover:bg-primary/90 venust-glow-hover"
               onClick={(e) => {
                 e.preventDefault();
-                // This will be handled by the individual barbershop page
               }}
             >
               Ver Detalhes

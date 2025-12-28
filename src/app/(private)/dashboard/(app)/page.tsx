@@ -1,34 +1,30 @@
 "use client";
 
 import {
+  AlertCircle,
+  Bell,
   Calendar,
-  Users,
+  CalendarPlus,
+  ChevronDown,
+  Clock,
+  ExternalLink,
+  Eye,
   Scissors,
   Settings,
   TrendingUp,
-  CalendarPlus,
-  AlertCircle,
-  Clock,
+  Users,
   UserX,
-  Eye,
-  MousePointerClick,
-  ExternalLink,
-  Bell,
-  ChevronDown,
-  Search,
 } from "lucide-react";
 import {
-  AreaChart,
   Area,
+  AreaChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  BarChart,
-  Bar,
 } from "recharts";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type AlertType = "warning" | "info" | "error";
 interface Alert {
@@ -182,6 +178,7 @@ function Group() {
         preserveAspectRatio="none"
         viewBox="0 0 32 23"
       >
+        <title>Logo Venust</title>
         <g id="Group">
           <path
             d={svgPaths.p1620400}
@@ -208,7 +205,7 @@ function VenustIcons() {
   );
 }
 
-function Sidebar() {
+function _Sidebar() {
   const menuItems: {
     icon: IconComponent;
     label: string;
@@ -265,9 +262,9 @@ function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex flex-col gap-[8px] px-[16px] py-[24px]">
-        {menuItems.map((item, index) => (
+        {menuItems.map((item) => (
           <a
-            key={index}
+            key={item.href}
             href={item.href}
             className={`flex items-center gap-[12px] px-[16px] py-[12px] rounded-[8px] transition-colors ${
               item.active
@@ -487,10 +484,10 @@ function EmptyAppointments() {
 export default function Dashboard() {
   const totalAppointments = todayAppointments.length;
   const confirmedAppointments = todayAppointments.filter(
-    (apt) => apt.status === "confirmed"
+    (apt) => apt.status === "confirmed",
   ).length;
-  const pendingAppointments = todayAppointments.filter(
-    (apt) => apt.status === "pending"
+  const _pendingAppointments = todayAppointments.filter(
+    (apt) => apt.status === "pending",
   ).length;
 
   // Mock calculations
@@ -522,7 +519,10 @@ export default function Dashboard() {
             </div>
             <div className="flex items-center gap-[16px]">
               {/* Notifications */}
-              <button className="bg-[#1a1d21] relative rounded-[8px] size-[40px] flex items-center justify-center hover:bg-[#1f2226] transition-colors">
+              <button
+                type="button"
+                className="bg-[#1a1d21] relative rounded-[8px] size-[40px] flex items-center justify-center hover:bg-[#1f2226] transition-colors"
+              >
                 <div
                   aria-hidden="true"
                   className="absolute border border-[#363a3d] border-solid inset-[-1px] pointer-events-none rounded-[9px]"
@@ -841,9 +841,9 @@ export default function Dashboard() {
                 </a>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px]">
-                {topServicesData.map((service, index) => (
+                {topServicesData.map((service) => (
                   <div
-                    key={index}
+                    key={service.name}
                     className="bg-[#363a3d]/30 rounded-[8px] p-[16px] flex flex-col gap-[8px]"
                   >
                     <div className="flex items-center justify-between">

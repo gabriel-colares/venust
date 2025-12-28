@@ -1,26 +1,55 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Users,
+  Calendar,
+  Edit,
+  Filter,
+  History,
+  Mail,
+  MessageCircle,
+  Phone,
   Plus,
   Search,
-  Filter,
-  MoreVertical,
-  MessageCircle,
-  Edit,
-  Trash2,
-  Calendar,
-  Clock,
-  Phone,
-  Mail,
-  User,
-  History,
   Star,
+  Trash2,
+  Users,
 } from "lucide-react";
+import { useState } from "react";
 
-// Mock data
-const clients = [
+type Appointment = {
+  id: number;
+  date: string;
+  time: string;
+  service: string;
+  barber: string;
+  price: number;
+  status: "completed" | "pending";
+};
+
+type Client = {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  createdAt: string;
+  lastVisit: string;
+  totalVisits: number;
+  totalSpent: number;
+  notes: string;
+  appointments: Appointment[];
+};
+
+type ClientCardProps = {
+  client: Client;
+  onViewDetails: (client: Client) => void;
+};
+
+type ClientDetailsModalProps = {
+  client: Client | null;
+  onClose: () => void;
+};
+
+const clients: Client[] = [
   {
     id: 1,
     name: "João Silva",
@@ -98,7 +127,7 @@ const clients = [
   },
 ];
 
-function ClientCard({ client, onViewDetails }: any) {
+function ClientCard({ client, onViewDetails }: ClientCardProps) {
   const handleWhatsApp = () => {
     const phone = client.phone.replace(/\D/g, "");
     const message = `Olá ${client.name}! Como você está? Gostaria de agendar um novo horário na nossa barbearia?`;
@@ -138,16 +167,23 @@ function ClientCard({ client, onViewDetails }: any) {
         </div>
         <div className="flex items-center gap-[8px]">
           <button
+            type="button"
             onClick={handleWhatsApp}
             className="bg-green-500 hover:bg-green-600 rounded-[6px] p-[8px] transition-colors"
             title="Enviar mensagem no WhatsApp"
           >
             <MessageCircle className="size-[16px] text-white" />
           </button>
-          <button className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]">
+          <button
+            type="button"
+            className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]"
+          >
             <Edit className="size-[16px]" />
           </button>
-          <button className="text-[#9b9c9e] hover:text-red-400 transition-colors p-[8px]">
+          <button
+            type="button"
+            className="text-[#9b9c9e] hover:text-red-400 transition-colors p-[8px]"
+          >
             <Trash2 className="size-[16px]" />
           </button>
         </div>
@@ -186,6 +222,7 @@ function ClientCard({ client, onViewDetails }: any) {
       )}
 
       <button
+        type="button"
         onClick={() => onViewDetails(client)}
         className="w-full bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[8px] py-[8px] text-[#9b9c9e] hover:text-black text-[14px] font-medium transition-colors"
       >
@@ -195,7 +232,7 @@ function ClientCard({ client, onViewDetails }: any) {
   );
 }
 
-function ClientDetailsModal({ client, onClose }: any) {
+function ClientDetailsModal({ client, onClose }: ClientDetailsModalProps) {
   if (!client) return null;
 
   return (
@@ -223,6 +260,7 @@ function ClientDetailsModal({ client, onClose }: any) {
               </div>
             </div>
             <button
+              type="button"
               onClick={onClose}
               className="text-[#9b9c9e] hover:text-white transition-colors p-[8px]"
             >
@@ -287,7 +325,7 @@ function ClientDetailsModal({ client, onClose }: any) {
               Histórico de Agendamentos
             </div>
             <div className="space-y-[12px]">
-              {client.appointments.map((appointment: any) => (
+              {client.appointments.map((appointment) => (
                 <div
                   key={appointment.id}
                   className="bg-[#0d0f10] rounded-[8px] p-[16px] flex items-center justify-between"
@@ -328,7 +366,7 @@ function ClientDetailsModal({ client, onClose }: any) {
 
 export default function ClientesPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   const filteredClients = clients.filter(
     (client) =>
@@ -350,7 +388,10 @@ export default function ClientesPage() {
               Gerencie os clientes da sua barbearia
             </div>
           </div>
-          <button className="bg-[#32f1b4] h-[40px] px-[20px] rounded-[8px] flex items-center gap-[8px] hover:bg-[#2cd9a0] transition-colors">
+          <button
+            type="button"
+            className="bg-[#32f1b4] h-[40px] px-[20px] rounded-[8px] flex items-center gap-[8px] hover:bg-[#2cd9a0] transition-colors"
+          >
             <Plus className="size-[16px] text-black" />
             <span className="font-['Plus_Jakarta_Sans:SemiBold',_sans-serif] font-semibold text-black text-[14px]">
               Novo Cliente
@@ -376,7 +417,10 @@ export default function ClientesPage() {
                 />
               </div>
             </div>
-            <button className="bg-[#1a1d21] h-[40px] px-[16px] rounded-[8px] flex items-center gap-[8px] border border-[#363a3d] hover:bg-[#1f2226] transition-colors">
+            <button
+              type="button"
+              className="bg-[#1a1d21] h-[40px] px-[16px] rounded-[8px] flex items-center gap-[8px] border border-[#363a3d] hover:bg-[#1f2226] transition-colors"
+            >
               <Filter className="size-[16px] text-[#9b9c9e]" />
               <span className="text-[#9b9c9e] text-[14px]">Filtros</span>
             </button>

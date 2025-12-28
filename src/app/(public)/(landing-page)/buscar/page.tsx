@@ -1,12 +1,12 @@
 "use client";
 
+import { Filter, MapPin, Search } from "lucide-react";
 import { useState } from "react";
-import { Search, MapPin, Filter } from "lucide-react";
+import { BarbershopCard } from "@/components/landing-page/buscar/barbershop-card";
+import { Footer } from "@/components/shared/footer";
+import { Navbar } from "@/components/shared/navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { BarbershopCard } from "@/components/landing-page/buscar/barbershop-card";
 
 const mockBarbershops = [
   {

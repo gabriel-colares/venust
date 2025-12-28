@@ -1,26 +1,82 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Store,
+  Calendar,
+  Camera,
+  Clock,
+  Copy,
+  Edit,
+  ExternalLink,
+  Globe,
   MapPin,
   Phone,
-  Clock,
-  Camera,
-  Edit,
-  Save,
-  ExternalLink,
-  Copy,
   Plus,
+  Save,
+  Store,
   Trash2,
-  Calendar,
-  Globe,
-  Image,
   Upload,
 } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
-// Mock data
-const barbershopData = {
+type DayKey =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
+
+type WorkingDaySchedule = {
+  open: string;
+  close: string;
+  closed: boolean;
+};
+
+type WorkingHours = Record<DayKey, WorkingDaySchedule>;
+
+type SpecialDate = {
+  id: number;
+  date: string;
+  description: string;
+  closed: boolean;
+};
+
+type BarbershopData = {
+  name: string;
+  description: string;
+  address: string;
+  mapLink: string;
+  phone: string;
+  whatsapp: string;
+  slug: string;
+  publicUrl: string;
+  coverImage: string;
+  gallery: string[];
+  workingHours: WorkingHours;
+  specialDates: SpecialDate[];
+};
+
+type WorkingHoursCardProps = {
+  workingHours: WorkingHours;
+  onUpdate: (newHours: WorkingHours) => void;
+};
+
+type ProfileCardProps = {
+  data: BarbershopData;
+  onUpdate: (newData: BarbershopData) => void;
+};
+
+type GalleryCardProps = {
+  coverImage: string;
+  gallery: string[];
+  onUpdate: (
+    newGallery: Partial<Pick<BarbershopData, "coverImage" | "gallery">>,
+  ) => void;
+};
+
+const barbershopData: BarbershopData = {
   name: "Barbearia Venust",
   description:
     "A melhor barbearia da região, com profissionais experientes e ambiente acolhedor.",
@@ -32,10 +88,10 @@ const barbershopData = {
   publicUrl: "venust.app/barbearia/venust",
   coverImage: "/api/placeholder/800/400",
   gallery: [
-    "/api/placeholder/300/200",
-    "/api/placeholder/300/200",
-    "/api/placeholder/300/200",
-    "/api/placeholder/300/200",
+    "/api/placeholder/300/200?img=1",
+    "/api/placeholder/300/200?img=2",
+    "/api/placeholder/300/200?img=3",
+    "/api/placeholder/300/200?img=4",
   ],
   workingHours: {
     monday: { open: "08:00", close: "18:00", closed: false },
@@ -70,18 +126,22 @@ const dayNames = {
   friday: "Sexta-feira",
   saturday: "Sábado",
   sunday: "Domingo",
-};
+} satisfies Record<DayKey, string>;
 
-function WorkingHoursCard({ workingHours, onUpdate }: any) {
+function WorkingHoursCard({ workingHours, onUpdate }: WorkingHoursCardProps) {
   const [editMode, setEditMode] = useState(false);
-  const [hours, setHours] = useState(workingHours);
+  const [hours, setHours] = useState<WorkingHours>(workingHours);
 
   const handleSave = () => {
     onUpdate(hours);
     setEditMode(false);
   };
 
-  const handleDayChange = (day: string, field: string, value: any) => {
+  const handleDayChange = (
+    day: DayKey,
+    field: keyof WorkingDaySchedule,
+    value: string | boolean,
+  ) => {
     setHours({
       ...hours,
       [day]: {
@@ -101,6 +161,7 @@ function WorkingHoursCard({ workingHours, onUpdate }: any) {
           </div>
         </div>
         <button
+          type="button"
           onClick={editMode ? handleSave : () => setEditMode(true)}
           className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[8px] flex items-center gap-[8px] transition-colors"
         >
@@ -116,20 +177,20 @@ function WorkingHoursCard({ workingHours, onUpdate }: any) {
       </div>
 
       <div className="space-y-[12px]">
-        {Object.entries(hours).map(([day, schedule]: [string, any]) => (
+        {(Object.keys(hours) as DayKey[]).map((day) => (
           <div
             key={day}
             className="flex items-center justify-between p-[12px] bg-[#0d0f10] rounded-[8px]"
           >
             <div className="font-medium text-white text-[14px] w-[120px]">
-              {dayNames[day as keyof typeof dayNames]}
+              {dayNames[day]}
             </div>
             {editMode ? (
               <div className="flex items-center gap-[12px]">
                 <label className="flex items-center gap-[8px]">
                   <input
                     type="checkbox"
-                    checked={schedule.closed}
+                    checked={hours[day].closed}
                     onChange={(e) =>
                       handleDayChange(day, "closed", e.target.checked)
                     }
@@ -137,11 +198,11 @@ function WorkingHoursCard({ workingHours, onUpdate }: any) {
                   />
                   <span className="text-[#9b9c9e] text-[12px]">Fechado</span>
                 </label>
-                {!schedule.closed && (
+                {!hours[day].closed && (
                   <>
                     <input
                       type="time"
-                      value={schedule.open}
+                      value={hours[day].open}
                       onChange={(e) =>
                         handleDayChange(day, "open", e.target.value)
                       }
@@ -150,7 +211,7 @@ function WorkingHoursCard({ workingHours, onUpdate }: any) {
                     <span className="text-[#9b9c9e]">às</span>
                     <input
                       type="time"
-                      value={schedule.close}
+                      value={hours[day].close}
                       onChange={(e) =>
                         handleDayChange(day, "close", e.target.value)
                       }
@@ -161,9 +222,9 @@ function WorkingHoursCard({ workingHours, onUpdate }: any) {
               </div>
             ) : (
               <div className="text-[#9b9c9e] text-[14px]">
-                {schedule.closed
+                {hours[day].closed
                   ? "Fechado"
-                  : `${schedule.open} às ${schedule.close}`}
+                  : `${hours[day].open} às ${hours[day].close}`}
               </div>
             )}
           </div>
@@ -173,9 +234,9 @@ function WorkingHoursCard({ workingHours, onUpdate }: any) {
   );
 }
 
-function ProfileCard({ data, onUpdate }: any) {
+function ProfileCard({ data, onUpdate }: ProfileCardProps) {
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState(data);
+  const [formData, setFormData] = useState<BarbershopData>(data);
 
   const handleSave = () => {
     onUpdate(formData);
@@ -197,6 +258,7 @@ function ProfileCard({ data, onUpdate }: any) {
           </div>
         </div>
         <button
+          type="button"
           onClick={editMode ? handleSave : () => setEditMode(true)}
           className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[8px] px-[16px] py-[8px] flex items-center gap-[8px] transition-colors"
         >
@@ -213,11 +275,12 @@ function ProfileCard({ data, onUpdate }: any) {
 
       <div className="space-y-[16px]">
         <div>
-          <label className="block text-white text-[14px] font-medium mb-[8px]">
+          <div className="block text-white text-[14px] font-medium mb-[8px]">
             Nome da Barbearia
-          </label>
+          </div>
           {editMode ? (
             <input
+              id="barbershop-name"
               type="text"
               value={formData.name}
               onChange={(e) =>
@@ -231,11 +294,12 @@ function ProfileCard({ data, onUpdate }: any) {
         </div>
 
         <div>
-          <label className="block text-white text-[14px] font-medium mb-[8px]">
+          <div className="block text-white text-[14px] font-medium mb-[8px]">
             Descrição
-          </label>
+          </div>
           {editMode ? (
             <textarea
+              id="barbershop-description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
@@ -250,11 +314,12 @@ function ProfileCard({ data, onUpdate }: any) {
         </div>
 
         <div>
-          <label className="block text-white text-[14px] font-medium mb-[8px]">
+          <div className="block text-white text-[14px] font-medium mb-[8px]">
             Endereço
-          </label>
+          </div>
           {editMode ? (
             <input
+              id="barbershop-address"
               type="text"
               value={formData.address}
               onChange={(e) =>
@@ -269,6 +334,7 @@ function ProfileCard({ data, onUpdate }: any) {
                 {formData.address}
               </span>
               <button
+                type="button"
                 onClick={() => window.open(formData.mapLink, "_blank")}
                 className="text-[#32f1b4] hover:text-[#2cd9a0] transition-colors"
               >
@@ -280,11 +346,12 @@ function ProfileCard({ data, onUpdate }: any) {
 
         <div className="grid grid-cols-2 gap-[16px]">
           <div>
-            <label className="block text-white text-[14px] font-medium mb-[8px]">
+            <div className="block text-white text-[14px] font-medium mb-[8px]">
               Telefone
-            </label>
+            </div>
             {editMode ? (
               <input
+                id="barbershop-phone"
                 type="text"
                 value={formData.phone}
                 onChange={(e) =>
@@ -302,11 +369,12 @@ function ProfileCard({ data, onUpdate }: any) {
             )}
           </div>
           <div>
-            <label className="block text-white text-[14px] font-medium mb-[8px]">
+            <div className="block text-white text-[14px] font-medium mb-[8px]">
               WhatsApp
-            </label>
+            </div>
             {editMode ? (
               <input
+                id="barbershop-whatsapp"
                 type="text"
                 value={formData.whatsapp}
                 onChange={(e) =>
@@ -323,15 +391,16 @@ function ProfileCard({ data, onUpdate }: any) {
         </div>
 
         <div>
-          <label className="block text-white text-[14px] font-medium mb-[8px]">
+          <div className="block text-white text-[14px] font-medium mb-[8px]">
             URL Pública
-          </label>
+          </div>
           {editMode ? (
             <div className="flex items-center gap-[8px]">
               <span className="text-[#9b9c9e] text-[14px]">
                 venust.app/barbearia/
               </span>
               <input
+                id="barbershop-slug"
                 type="text"
                 value={formData.slug}
                 onChange={(e) =>
@@ -351,6 +420,7 @@ function ProfileCard({ data, onUpdate }: any) {
                 https://{formData.publicUrl}
               </span>
               <button
+                type="button"
                 onClick={copyUrl}
                 className="text-[#32f1b4] hover:text-[#2cd9a0] transition-colors"
                 title="Copiar URL"
@@ -358,6 +428,7 @@ function ProfileCard({ data, onUpdate }: any) {
                 <Copy className="size-[16px]" />
               </button>
               <button
+                type="button"
                 onClick={() =>
                   window.open(`https://${formData.publicUrl}`, "_blank")
                 }
@@ -374,7 +445,7 @@ function ProfileCard({ data, onUpdate }: any) {
   );
 }
 
-function GalleryCard({ coverImage, gallery, onUpdate }: any) {
+function GalleryCard({ coverImage, gallery }: GalleryCardProps) {
   return (
     <div className="bg-[#1a1d21] rounded-[12px] p-[24px] border border-[#363a3d]">
       <div className="flex items-center justify-between mb-[20px]">
@@ -393,10 +464,12 @@ function GalleryCard({ coverImage, gallery, onUpdate }: any) {
           </div>
           <div className="relative bg-[#0d0f10] rounded-[8px] h-[200px] border-2 border-dashed border-[#363a3d] flex items-center justify-center group hover:border-[#32f1b4] transition-colors cursor-pointer">
             {coverImage ? (
-              <img
+              <Image
                 src={coverImage}
                 alt="Capa"
-                className="w-full h-full object-cover rounded-[8px]"
+                fill
+                sizes="(max-width: 768px) 100vw, 800px"
+                className="object-cover rounded-[8px]"
               />
             ) : (
               <div className="text-center">
@@ -419,16 +492,21 @@ function GalleryCard({ coverImage, gallery, onUpdate }: any) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[12px]">
             {gallery.map((image: string, index: number) => (
               <div
-                key={index}
+                key={image}
                 className="relative bg-[#0d0f10] rounded-[8px] h-[120px] border border-[#363a3d] group overflow-hidden"
               >
-                <img
+                <Image
                   src={image}
                   alt={`Galeria ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <button className="text-red-400 hover:text-red-300 transition-colors">
+                  <button
+                    type="button"
+                    className="text-red-400 hover:text-red-300 transition-colors"
+                  >
                     <Trash2 className="size-[16px]" />
                   </button>
                 </div>
@@ -448,17 +526,19 @@ function GalleryCard({ coverImage, gallery, onUpdate }: any) {
 }
 
 export default function BarbeariaPage() {
-  const [data, setData] = useState(barbershopData);
+  const [data, setData] = useState<BarbershopData>(barbershopData);
 
-  const handleProfileUpdate = (newData: any) => {
-    setData({ ...data, ...newData });
+  const handleProfileUpdate = (newData: BarbershopData) => {
+    setData(newData);
   };
 
-  const handleHoursUpdate = (newHours: any) => {
+  const handleHoursUpdate = (newHours: WorkingHours) => {
     setData({ ...data, workingHours: newHours });
   };
 
-  const handleGalleryUpdate = (newGallery: any) => {
+  const handleGalleryUpdate = (
+    newGallery: Partial<Pick<BarbershopData, "coverImage" | "gallery">>,
+  ) => {
     setData({ ...data, ...newGallery });
   };
 
@@ -511,14 +591,20 @@ export default function BarbeariaPage() {
                     </div>
                     <div className="flex items-center gap-[8px]">
                       <span className="text-red-400 text-[12px]">Fechado</span>
-                      <button className="text-[#9b9c9e] hover:text-red-400 transition-colors">
+                      <button
+                        type="button"
+                        className="text-[#9b9c9e] hover:text-red-400 transition-colors"
+                      >
                         <Trash2 className="size-[16px]" />
                       </button>
                     </div>
                   </div>
                 ))}
 
-                <button className="w-full bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[8px] py-[12px] text-[#9b9c9e] hover:text-black text-[14px] font-medium transition-colors flex items-center justify-center gap-[8px]">
+                <button
+                  type="button"
+                  className="w-full bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[8px] py-[12px] text-[#9b9c9e] hover:text-black text-[14px] font-medium transition-colors flex items-center justify-center gap-[8px]"
+                >
                   <Plus className="size-[16px]" />
                   Adicionar Data Especial
                 </button>

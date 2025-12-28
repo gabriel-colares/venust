@@ -1,30 +1,25 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Calendar,
-  Users,
-  Scissors,
-  Settings,
-  TrendingUp,
-  CalendarPlus,
-  Clock,
-  Search,
   Bell,
-  ChevronDown,
-  Filter,
-  Download,
+  Calendar,
+  CalendarPlus,
   Check,
-  X,
-  MoreVertical,
-  MessageCircle,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
+  Clock,
+  Download,
   Eye,
+  Filter,
+  MessageCircle,
+  MoreVertical,
+  Search,
   UserCheck,
-  CalendarX,
 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -33,8 +28,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -52,7 +45,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 
 // Types
 type AppointmentStatus =
@@ -234,80 +226,10 @@ const mockAppointments: Appointment[] = [
 //   );
 // }
 
-function VenustIcons() {
+function _VenustIcons() {
   return (
     <div className="relative shrink-0 size-[32px]" data-name="Venust Icons">
       {/* <Group /> */}
-    </div>
-  );
-}
-
-function Sidebar() {
-  const menuItems = [
-    { icon: TrendingUp, label: "Dashboard", active: false, href: "/dashboard" },
-    {
-      icon: Calendar,
-      label: "Agendamentos",
-      active: true,
-      href: "/agendamentos",
-    },
-    { icon: Users, label: "Clientes", active: false, href: "/clientes" },
-    { icon: Scissors, label: "Serviços", active: false, href: "/servicos" },
-    { icon: Users, label: "Equipe", active: false, href: "/equipe" },
-    {
-      icon: Settings,
-      label: "Configurações",
-      active: false,
-      href: "/configuracoes",
-    },
-  ];
-
-  return (
-    <div className="bg-[#0d0f10] border-r border-[#363a3d] h-full w-[280px] flex flex-col shrink-0">
-      <div className="box-border flex items-center gap-[12px] p-[24px] border-b border-[#363a3d]">
-        <VenustIcons />
-        <div className="flex flex-col font-['Plus_Jakarta_Sans:SemiBold',_sans-serif] font-semibold justify-center leading-[0] text-white text-[18px]">
-          <p className="leading-[28px]">Phantom Hair</p>
-        </div>
-      </div>
-
-      <nav className="flex flex-col gap-[8px] px-[16px] py-[24px]">
-        {menuItems.map((item, index) => (
-          <a
-            key={index}
-            href={item.href}
-            className={`flex items-center gap-[12px] px-[16px] py-[12px] rounded-[8px] transition-colors ${
-              item.active
-                ? "bg-[#32f1b4] text-[#0c1132]"
-                : "text-[#9b9c9e] hover:bg-[#1a1d21] hover:text-white"
-            }`}
-          >
-            <item.icon className="size-[20px]" />
-            <span className="font-['Plus_Jakarta_Sans:SemiBold',_sans-serif] font-semibold text-[14px] tracking-[0.15px]">
-              {item.label}
-            </span>
-          </a>
-        ))}
-      </nav>
-
-      <div className="mt-auto border-t border-[#363a3d] p-[16px]">
-        <div className="flex items-center gap-[12px] p-[12px] rounded-[8px] cursor-pointer hover:bg-[#1a1d21] transition-colors">
-          <div className="bg-[#32f1b4] rounded-full size-[40px] flex items-center justify-center">
-            <span className="font-['Plus_Jakarta_Sans:SemiBold',_sans-serif] font-semibold text-[#0c1132] text-[16px]">
-              PH
-            </span>
-          </div>
-          <div className="flex-1">
-            <div className="font-['Plus_Jakarta_Sans:SemiBold',_sans-serif] font-semibold text-white text-[14px] tracking-[0.15px]">
-              Phantom Hair
-            </div>
-            <div className="font-['Plus_Jakarta_Sans:Medium',_sans-serif] font-medium text-[#9b9c9e] text-[12px] tracking-[0.15px]">
-              Admin
-            </div>
-          </div>
-          <ChevronDown className="size-[16px] text-[#9b9c9e]" />
-        </div>
-      </div>
     </div>
   );
 }
@@ -846,6 +768,7 @@ function MainContent() {
                         <div className="flex items-center justify-end gap-[8px]">
                           {appointment.status === "pending" && (
                             <button
+                              type="button"
                               onClick={() =>
                                 handleStatusChange(appointment.id, "confirmed")
                               }
@@ -856,6 +779,7 @@ function MainContent() {
                             </button>
                           )}
                           <button
+                            type="button"
                             onClick={() =>
                               handleWhatsApp(
                                 appointment.phone,
@@ -875,6 +799,7 @@ function MainContent() {
                             <Eye className="size-[16px] text-[#9b9c9e]" />
                           </a>
                           <button
+                            type="button"
                             className="p-[8px] hover:bg-[#363a3d] rounded-[6px] transition-colors"
                             title="Mais opções"
                           >

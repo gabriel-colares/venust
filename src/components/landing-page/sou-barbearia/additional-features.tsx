@@ -1,12 +1,12 @@
-import { Card } from "@/components/ui/card";
 import {
+  AlertTriangle,
+  BookOpen,
+  Check,
+  Link as LinkIcon,
   Shield,
   TrendingUp,
-  Link as LinkIcon,
-  BookOpen,
-  AlertTriangle,
-  Check,
 } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const allFeatures = [
   {
@@ -76,7 +76,10 @@ export function AdditionalFeaturesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {allFeatures.map((feature, index) => (
-            <Card key={index} className="p-6 border border-border/50">
+            <Card
+              key={`${feature.title}-${index.toString()}`}
+              className="p-6 border border-border/50"
+            >
               <div className="flex items-start gap-4 mb-4">
                 <div className="p-3 rounded-lg bg-primary/20 flex-shrink-0">
                   <feature.icon
@@ -96,7 +99,7 @@ export function AdditionalFeaturesSection() {
               <ul className="space-y-2">
                 {feature.points.map((point, pointIndex) => (
                   <li
-                    key={pointIndex}
+                    key={`${feature.title}-${pointIndex.toString()}`}
                     className="flex items-start gap-2 text-sm text-muted-foreground"
                   >
                     <Check

@@ -1,27 +1,44 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Star,
-  MessageSquare,
+  AlertTriangle,
   Eye,
   EyeOff,
-  Reply,
-  Filter,
-  Search,
-  Calendar,
-  User,
-  ThumbsUp,
-  ThumbsDown,
+  MessageSquare,
   MoreVertical,
+  Reply,
+  Search,
   Send,
-  X,
-  Check,
-  AlertTriangle,
+  Star,
+  ThumbsDown,
+  ThumbsUp,
 } from "lucide-react";
+import { useState } from "react";
 
-// Mock data
-const reviewsData = [
+type Review = {
+  id: number;
+  clientName: string;
+  clientInitials: string;
+  rating: number;
+  comment: string;
+  date: string;
+  service: string;
+  barber: string;
+  visible: boolean;
+  responded: boolean;
+  response: string;
+  responseDate: string;
+  helpful: number;
+  notHelpful: number;
+};
+
+type ReviewCardProps = {
+  review: Review;
+  onToggleVisibility: (reviewId: number) => void;
+  onRespond: (reviewId: number, responseText: string) => void;
+};
+
+const reviewsData: Review[] = [
   {
     id: 1,
     clientName: "João Silva",
@@ -129,7 +146,11 @@ function StarRating({ rating, size = 16 }: { rating: number; size?: number }) {
   );
 }
 
-function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
+function ReviewCard({
+  review,
+  onToggleVisibility,
+  onRespond,
+}: ReviewCardProps) {
   const [showResponseForm, setShowResponseForm] = useState(false);
   const [responseText, setResponseText] = useState(review.response || "");
 
@@ -170,6 +191,7 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
           <StarRating rating={review.rating} />
           <div className="flex items-center gap-[4px]">
             <button
+              type="button"
               onClick={() => onToggleVisibility(review.id)}
               className={`p-[6px] rounded-[6px] transition-colors ${
                 review.visible
@@ -184,7 +206,10 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
                 <EyeOff className="size-[16px]" />
               )}
             </button>
-            <button className="p-[6px] text-[#9b9c9e] hover:text-white hover:bg-[#363a3d] rounded-[6px] transition-colors">
+            <button
+              type="button"
+              className="p-[6px] text-[#9b9c9e] hover:text-white hover:bg-[#363a3d] rounded-[6px] transition-colors"
+            >
               <MoreVertical className="size-[16px]" />
             </button>
           </div>
@@ -253,6 +278,7 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
           />
           <div className="flex items-center gap-[8px]">
             <button
+              type="button"
               onClick={handleSubmitResponse}
               className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[6px] px-[12px] py-[6px] text-black text-[12px] font-semibold transition-colors flex items-center gap-[4px]"
             >
@@ -260,6 +286,7 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
               Enviar
             </button>
             <button
+              type="button"
               onClick={() => setShowResponseForm(false)}
               className="bg-[#363a3d] hover:bg-[#4a4f54] rounded-[6px] px-[12px] py-[6px] text-[#9b9c9e] text-[12px] font-medium transition-colors"
             >
@@ -273,6 +300,7 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
       <div className="flex items-center gap-[8px]">
         {!review.responded && (
           <button
+            type="button"
             onClick={() => setShowResponseForm(true)}
             className="bg-[#32f1b4] hover:bg-[#2cd9a0] rounded-[6px] px-[12px] py-[6px] text-black text-[12px] font-semibold transition-colors flex items-center gap-[4px]"
           >
@@ -282,6 +310,7 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
         )}
         {review.responded && (
           <button
+            type="button"
             onClick={() => setShowResponseForm(true)}
             className="bg-[#363a3d] hover:bg-[#32f1b4] hover:text-black rounded-[6px] px-[12px] py-[6px] text-[#9b9c9e] hover:text-black text-[12px] font-medium transition-colors flex items-center gap-[4px]"
           >
@@ -295,7 +324,7 @@ function ReviewCard({ review, onToggleVisibility, onRespond }: any) {
 }
 
 export default function AvaliacoesPage() {
-  const [reviews, setReviews] = useState(reviewsData);
+  const [reviews, setReviews] = useState<Review[]>(reviewsData);
   const [searchTerm, setSearchTerm] = useState("");
   const [ratingFilter, setRatingFilter] = useState("all");
   const [visibilityFilter, setVisibilityFilter] = useState("all");
